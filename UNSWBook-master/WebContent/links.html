@@ -1,0 +1,156 @@
+<link href="https://fonts.googleapis.com/css?family=Raleway:300,600" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.css">
+<link rel="stylesheet" href="https://raw.githubusercontent.com/alxlit/bootstrap-chosen/master/bootstrap-chosen.css">
+<style>
+    html, body {
+        background: linear-gradient(#C2DFFF, #fff);
+        color: #636b6f;
+        font-family: 'Raleway';
+        font-weight: 300;
+        height: 100%;
+        overflow-x: hidden; 
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    
+	.panel-login {
+		border-color: #ccc;
+		-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+		-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+		box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+	}
+	.panel-login>.panel-heading {
+		color: #00415d;
+		background-color: #fff;
+		border-color: #fff;
+		text-align:center;
+	}
+	.panel-login>.panel-heading a{
+		text-decoration: none;
+		color: #666;
+		font-weight: bold;
+		font-size: 15px;
+		-webkit-transition: all 0.1s linear;
+		-moz-transition: all 0.1s linear;
+		transition: all 0.1s linear;
+	}
+	.panel-login>.panel-heading a.active{
+		color: #59B2E6;
+		font-size: 18px;
+	}
+	.panel-login>.panel-heading hr{
+		margin-top: 10px;
+		margin-bottom: 0px;
+		clear: both;
+		border: 0;
+		height: 1px;
+		background-image: -webkit-linear-gradient(left,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.15),rgba(0, 0, 0, 0));
+		background-image: -moz-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+		background-image: -ms-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+		background-image: -o-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0.15),rgba(0,0,0,0));
+	}
+	.panel-login input[type="text"],.panel-login input[type="email"],.panel-login input[type="password"] {
+		height: 45px;
+		border: 1px solid #ddd;
+		font-size: 16px;
+		-webkit-transition: all 0.1s linear;
+		-moz-transition: all 0.1s linear;
+		transition: all 0.1s linear;
+	}
+	.panel-login input:hover,
+	.panel-login input:focus {
+		outline:none;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		box-shadow: none;
+		border-color: #ccc;
+	}
+	.btn-login {
+		background-color: #59B2E0;
+		outline: none;
+		color: #fff;
+		font-size: 14px;
+		height: auto;
+		font-weight: normal;
+		padding: 14px 0;
+		text-transform: uppercase;
+		border-color: #59B2E6;
+	}
+	.btn-login:hover,
+	.btn-login:focus {
+		color: #fff;
+		background-color: #53A3CD;
+		border-color: #53A3CD;
+	}
+	.forgot-password {
+		text-decoration: underline;
+		color: #888;
+	}
+	.forgot-password:hover,
+	.forgot-password:focus {
+		text-decoration: underline;
+		color: #666;
+	}
+	.btn-register {
+		background-color: #1CB94E;
+		outline: none;
+		color: #fff;
+		font-size: 14px;
+		height: auto;
+		font-weight: normal;
+		padding: 14px 0;
+		text-transform: uppercase;
+		border-color: #1CB94A;
+	}
+	.btn-register:hover,
+	.btn-register:focus {
+		color: #fff;
+		background-color: #1CA347;
+		border-color: #1CA347;
+	}
+	.navbar-form {width:50%;}
+	.navbar-form .input-group {width:420px;}
+	.dropdown-menu {width:420px;}
+	.dropdown-menu.setting {
+		width:140px;
+		min-width: 143px;
+	}
+	.media {
+		padding:0px 5px;
+		width:100%;
+	}
+	.media:first-child {margin-top:10px;}
+	.media .media-left {
+		float:left;
+		margin-right:10px;
+	}
+	.media .media-body {float:left;}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://rawgit.com/wenzhixin/bootstrap-table/master/src/bootstrap-table.js"></script>
+<script>	
+	function goBack() {
+	    window.history.back();
+	}
+
+	$(function() {
+	    $('#login-form-link').click(function(e) {
+			$("#login-form").delay(100).fadeIn(100);
+	 		$("#register-form").fadeOut(100);
+			$('#register-form-link').removeClass('active');
+			$(this).addClass('active');
+			e.preventDefault();
+		});
+		$('#register-form-link').click(function(e) {
+			$("#register-form").delay(100).fadeIn(100);
+	 		$("#login-form").fadeOut(100);
+			$('#login-form-link').removeClass('active');
+			$(this).addClass('active');
+			e.preventDefault();
+		});
+	});
+</script>
