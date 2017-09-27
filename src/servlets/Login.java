@@ -31,7 +31,8 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("user");
+		String user = null;
+		//User user = (User) request.getSession().getAttribute("user");
 		DatabaseConnection dbc = (DatabaseConnection) request.getSession().getAttribute("dbc");
 		if(dbc == null) {
 			String dbURL = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
