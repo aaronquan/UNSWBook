@@ -4,14 +4,15 @@ import java.sql.*;
 
 public class DatabaseConnection {
 	private String dbURL;
-	private Connection conn;
+	private  Connection conn;
 	private Statement stmt;
+	
 	public DatabaseConnection(String url) {
 		dbURL = url;
 		conn = null;
 		stmt = null;
 	}
-	public void createConnection() {
+	public Connection createConnection() {
 		try
         {
             Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
@@ -22,7 +23,9 @@ public class DatabaseConnection {
         {
             except.printStackTrace();
         }
+		return conn;
 	}
+	
 	
 	public void shutdown()
     {
