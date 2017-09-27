@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import datastructures.*;
+
 /**
  * Servlet implementation class Login
  */
@@ -26,7 +28,20 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("login.jsp").forward(request, response);
+		User user = (User) request.getSession().getAttribute("user");
+		DatabaseConnection dbc = (DatabaseConnection) request.getSession().getAttribute("dbc");
+		if(dbc == null) {
+			String dbURL = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
+			dbc = new DatabaseConnection(dbURL);
+			dbc.createConnection();
+			request.getSession().setAttribute("dbc", dbc);
+		}
+		if (user == null) {
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}else {
+			request.getRequestDispatcher("welcome.jsp").forward(request, response);
+		}
+		
 	}
 
 	/**
