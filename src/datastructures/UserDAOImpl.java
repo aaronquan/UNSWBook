@@ -8,6 +8,10 @@ public class UserDAOImpl implements UserDAO{
 
 	private String dbUrl = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
 	private Connection conn;
+	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
+	private String validateStmt = "SELECT ID FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
+
+	
 	
 	public UserDAOImpl() {
 		DatabaseConnection dbc = new DatabaseConnection(dbUrl);
@@ -15,17 +19,14 @@ public class UserDAOImpl implements UserDAO{
 	}
 	@Override
 	public void addUser(User user) {
-			int id = 0;
 		try {
-			Statement stmt = conn.createStatement();
-			ResultSet results = stmt.executeQuery("select count(*) from UNSWBOOKUSER");
-			while(results.next()) {
-				id = results.getInt(1);
-			}
-			
-			String query = "insert into UNSWBOOKUSER values (" + id + ",'" + user.getName() + "','" + user.getPassword() + "')";
-			System.out.println(query);
-			boolean success = stmt.execute(query);
+			PreparedStatement stmt = conn.prepareStatement(userCreateStmt);
+			stmt.setString(1, user.getUsername());
+			stmt.setString(2, user.getPassword());
+			stmt.setString(3, user.getName());	
+			stmt.setString(4, user.getEmailAddress());	
+			System.out.println(stmt.toString());
+			boolean success = stmt.execute();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -83,6 +84,25 @@ public class UserDAOImpl implements UserDAO{
 			e.printStackTrace();
 		}
 		return users;
+	}
+	@Override
+	public Integer validate(String user, String pwd) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(validateStmt);
+			stmt.setString(1, user);
+			stmt.setString(2, pwd);
+			System.out.println(stmt.toString());
+			boolean success = stmt.execute();
+			if (!success) return null;
+			ResultSet results = stmt.getResultSet();
+			results.next();
+			return results.getInt(1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

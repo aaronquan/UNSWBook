@@ -41,11 +41,18 @@ public class registerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		User newUser = new User(username,password);
-		UserDAOImpl udi = new UserDAOImpl();
-		udi.addUser(newUser);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Login");
-		dispatcher.forward(request, response);
+		String email = request.getParameter("email");
+		String name = request.getParameter("first_name").concat(" ").concat(request.getParameter("surname")); //Do we care about having names be split?
+
+		if (username == null || password == null || email == null || name == null ){
+			request.getRequestDispatcher("registerServlet").forward(request, response); // FIXME: implement proper error handling for missing fields
+		}else{
+			User newUser = new User(username,password, email, name);
+			UserDAOImpl udi = new UserDAOImpl();
+			udi.addUser(newUser);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Login");
+			dispatcher.forward(request, response);
+		}
 	}
 
 }

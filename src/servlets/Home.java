@@ -31,7 +31,7 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("user") != null){
-			String userId = (String) session.getAttribute("user");
+			Integer userId = (Integer) session.getAttribute("user");
 			request.getRequestDispatcher("home.jsp").forward(request, response);
 		}else{
 			response.sendRedirect("Login");

@@ -9,7 +9,7 @@ public class UsersTest {
 
 	public static void main(String[] args) {
 		// Test inserting user
-		User u = new User("Jake", "abc");
+		User u = new User("Jake", "abc", null, null);
 		UserDAOImpl udi = new UserDAOImpl();
 		
 		// Check Database before
@@ -20,7 +20,7 @@ public class UsersTest {
 		}
 		System.out.println("Inserting User");
 		udi.addUser(u);
-		u = new User("Bob", "abc");
+		u = new User("Bob", "abc", null, null);
 		udi.addUser(u);
 		users = udi.getAllUsers();
 		System.out.println("Users After:");

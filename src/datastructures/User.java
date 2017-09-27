@@ -74,27 +74,11 @@ public class User {
 	
 	public User() {}
 	
-	public User (String name, String password) {
-		this.name = name;
+	public User (String username, String password, String email, String name) {
+		this.username = username;
 		this.password = password;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
+		this.emailAddress = email;
 		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	
 }

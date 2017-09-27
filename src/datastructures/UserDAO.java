@@ -9,4 +9,6 @@ public interface UserDAO {
 	List<User> findUsers(String name);
 	
 	List<User> getAllUsers();
+
+	Integer validate(String user, String pwd);
 }

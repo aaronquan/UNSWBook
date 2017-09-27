@@ -15,7 +15,7 @@ public class DatabaseConnection {
 	public Connection createConnection() {
 		try
         {
-            //Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
+            Class.forName("org.apache.derby.jdbc.ClientDriver").newInstance();
             //Get a connection
             conn = DriverManager.getConnection(dbURL); 
         }
