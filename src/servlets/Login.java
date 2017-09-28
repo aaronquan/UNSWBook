@@ -31,7 +31,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String user = null;
 		//User user = (User) request.getSession().getAttribute("user");
 		DatabaseConnection dbc = (DatabaseConnection) request.getSession().getAttribute("dbc");
 		if(dbc == null) {
@@ -40,12 +39,7 @@ public class Login extends HttpServlet {
 			dbc.createConnection();
 			request.getSession().setAttribute("dbc", dbc);
 		}
-		if (user == null) {
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}else {
-			request.getRequestDispatcher("welcome.jsp").forward(request, response);
-		}
-		
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	/**

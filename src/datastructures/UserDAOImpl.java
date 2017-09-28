@@ -11,6 +11,7 @@ public class UserDAOImpl implements UserDAO{
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
 	private String validateStmt = "SELECT ID FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
 	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
+	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
 
 	
 	
@@ -33,7 +34,6 @@ public class UserDAOImpl implements UserDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
@@ -41,17 +41,18 @@ public class UserDAOImpl implements UserDAO{
 		// TODO Auto-generated method stub
 		ArrayList<User> users = new ArrayList<User>();
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "select * from UNSWBOOKUSER where name like " + name;
-			ResultSet results =  stmt.executeQuery(query);
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER WHERE username like '%" + name + "%'");
+			//stmt.setString(1, name);
+			boolean success = stmt.execute();
+			ResultSet results =  stmt.getResultSet();
 			while(results.next()) {
 				int id = results.getInt(1);
 				String username = results.getString(2);
 				String password = results.getString(3);
-				User u = new User();
+				String rname = results.getString(4);
+				String email = results.getString(5);
+				User u = new User(username,password,email,rname);
 				u.setId(id);
-				u.setName(username);
-				u.setPassword(password);
 				users.add(u);
 			}
 			
