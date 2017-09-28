@@ -10,6 +10,7 @@ public class UserDAOImpl implements UserDAO{
 	private Connection conn;
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
 	private String validateStmt = "SELECT ID FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
+	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
 
 	
 	
@@ -97,6 +98,25 @@ public class UserDAOImpl implements UserDAO{
 			ResultSet results = stmt.getResultSet();
 			results.next();
 			return results.getInt(1);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public User lookupId(Integer id) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(lookupStmt);
+			stmt.setInt(1, id);
+			System.out.println(stmt.toString());
+			boolean success = stmt.execute();
+			if (!success) return null;
+			ResultSet results = stmt.getResultSet();
+			results.next();
+			User u = new User(results.getString("username"), results.getString("pwd"), results.getString("email"), results.getString("name"));
+			return u;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

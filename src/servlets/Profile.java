@@ -7,9 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import datastructures.DatabaseConnection;
 import datastructures.User;
+import datastructures.UserDAO;
+import datastructures.UserDAOImpl;
 
 /**
  * Servlet implementation class Profile
@@ -38,7 +41,16 @@ public class Profile extends HttpServlet {
 			request.getSession().setAttribute("dbc", dbc);
 		}
 		assert (dbc != null);
-		Integer userid = (Integer) request.getSession().getAttribute("user");
+		HttpSession session = request.getSession(false);
+		if (session == null || session.getAttribute("user") != null){
+			Integer userId = (Integer) session.getAttribute("user");
+			UserDAO usd = new UserDAOImpl();
+			User u = usd.lookupId(userId);
+			request.setAttribute("user", u);
+			request.getRequestDispatcher("profile.jsp").forward(request, response);
+		}else{
+			response.sendRedirect("Login");
+		}
 		
 	}
 

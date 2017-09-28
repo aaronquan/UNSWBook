@@ -11,4 +11,6 @@ public interface UserDAO {
 	List<User> getAllUsers();
 
 	Integer validate(String user, String pwd);
+
+	User lookupId(Integer id);
 }
