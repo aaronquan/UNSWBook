@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import classes.Email;
 import datastructures.*;
 
 /**
@@ -43,7 +44,11 @@ public class registerServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String name = request.getParameter("first_name").concat(" ").concat(request.getParameter("surname")); //Do we care about having names be split?
-
+		String surname = request.getParameter("surname").concat(" ").concat(request.getParameter("surname")); //Do we care about having names be split?
+		
+		Email emailConfirmation = new Email(email, name, surname, username);
+		
+		
 		if (username == null || password == null || email == null || name == null ){
 			request.getRequestDispatcher("registerServlet").forward(request, response); // FIXME: implement proper error handling for missing fields
 		}else{
@@ -53,6 +58,8 @@ public class registerServlet extends HttpServlet {
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Login");
 			dispatcher.forward(request, response);
 		}
+		
+		
 	}
 
 }
