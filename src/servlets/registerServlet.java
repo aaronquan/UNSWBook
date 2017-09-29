@@ -51,12 +51,9 @@ public class registerServlet extends HttpServlet {
 			UserDAOImpl udi = new UserDAOImpl();
 			boolean created = udi.addUser(newUser);
 			// If user not created display some sort of error message
-			if (created) {
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-				dispatcher.forward(request, response);
-			} else {
-				request.getRequestDispatcher("registerServlet").forward(request, response); // TODO: display that user couldn't be created
-			}
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+			dispatcher.forward(request, response);
+
 		}
 	}
 
