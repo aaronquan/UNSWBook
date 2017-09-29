@@ -13,12 +13,14 @@
 	</head>
 	<body>
 		<jsp:include page="navbar.jsp"/>
-		<h1>Results</h1><br>
-		<% for(User u : foundUsers) { %>
-		<form method="post" action="">
-			<h3><%= u.getUsername() + " (" + u.getName() + ")" %></h3> <button>Add Friend</button>
-			<input type="hidden" value="<%= u.getId() %>" name="friend">
-		</form>
-		<% } %>
+		<div class="container-fluid">
+			<h1>Results</h1>
+			<br>		  
+			<div class="list-group">
+				<% for(User u : foundUsers) { %>
+					<a href="Profile?method=POST&user=<%=u.getId()%>" class="list-group-item"><b><%= u.getName()%></b><%=" (" + u.getUsername() + ")" %></a>
+				<% } %>
+			</div>
+		</div>
 	</body>
 </html>

@@ -8,12 +8,11 @@
 	    <%@include file="links.html" %>
 	</head>
 	<body>
-		<jsp:include page="navbar.jsp">
-			<jsp:param name="user" value="${user.getName()}"/>
-		</jsp:include>
-		Hello ${sessionScope.user}
-		Hello ${user.getName()}
-		<p>This should contain a collection of posts ordered by latest timestamp of all your friends</p>
+		<jsp:include page="navbar.jsp"/>
+		<div class="content-fluid">
+			Hello ${user.getName()} you are user ${sessionScope.user}!
+			<p>This should contain a collection of posts ordered by latest timestamp of all your friends</p>
+		</div>
 	</body>
 <body>
 

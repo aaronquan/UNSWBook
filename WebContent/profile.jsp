@@ -10,7 +10,9 @@
 
 	<body>
 		<jsp:include page="navbar.jsp"/>
-		<h1>${user.getName()} PROFILE PAGE</h1>
-		email: ${user.getEmailAddress()}
+		<div class="content-fluid">
+			<h1>${user.getName()} PROFILE PAGE</h1>
+			Show user details and a list of posts sorted by date
+		</div>
 	</body>
 </html>
