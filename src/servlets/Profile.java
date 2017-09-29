@@ -51,7 +51,6 @@ public class Profile extends HttpServlet {
 		}else{
 			response.sendRedirect("Login");
 		}
-		
 	}
 
 	/**
@@ -61,5 +60,4 @@ public class Profile extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

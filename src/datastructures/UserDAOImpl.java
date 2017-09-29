@@ -64,6 +64,56 @@ public class UserDAOImpl implements UserDAO{
 		}
 		return users;
 	}
+	
+	
+	public List<User> findUsersAdvanced(String uname, String name, String age, String gender) {
+		// TODO Auto-generated method stub
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			String where_addition = "WHERE ";
+			if (! uname.equals("")) {
+				uname = where_addition + "USERNAME like '%" + uname + "%'";
+				where_addition = " AND ";
+			}
+			if (! name.equals("")) {
+				name = where_addition + "NAME like '%" + name + "%'";
+				where_addition = " AND ";
+			}
+			if (! age.equals("")) {
+				age = where_addition + "AGE = " + age;
+				where_addition = " AND ";
+			}
+			if (! gender.equals("")) {
+				gender = where_addition + "GENDER = '" + gender + "'";
+				where_addition = " AND ";
+			}
+			
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER " + uname + name + age + gender);
+			//stmt.setString(1, name);
+			System.out.println("uname: " + uname + " name: " + name + " gender: " + gender + " age: " + age);
+			
+			boolean success = stmt.execute();
+			ResultSet results =  stmt.getResultSet();
+			while(results.next()) {
+				int id = results.getInt(1);
+				String username = results.getString(2);
+				String password = results.getString(3);
+				String rname = results.getString(4);
+				String email = results.getString(5);
+				User u = new User(username,password,email,rname);
+				u.setId(id);
+				users.add(u);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
+	
+	
 	@Override
 	public List<User> getAllUsers() {
 		ArrayList<User> users = new ArrayList<User>();

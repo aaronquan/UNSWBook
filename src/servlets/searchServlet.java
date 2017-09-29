@@ -9,7 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import datastructures.DatabaseConnection;
 import datastructures.User;
 import datastructures.UserDAO;
 import datastructures.UserDAOImpl;
@@ -33,7 +35,6 @@ public class searchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -41,6 +42,10 @@ public class searchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Integer userId = (Integer) request.getSession(false).getAttribute("user");
+		UserDAO usd = new UserDAOImpl();
+		User u = usd.lookupId(userId);
+		request.setAttribute("user", u);
 		String username = request.getParameter("keywords");
 		UserDAO udao = new UserDAOImpl();
 		List<User> users =  udao.findUsers(username);
