@@ -20,7 +20,7 @@ public class UserDAOImpl implements UserDAO{
 		conn = dbc.createConnection();
 	}
 	@Override
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(userCreateStmt);
 			stmt.setString(1, user.getUsername());
@@ -29,10 +29,12 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setString(4, user.getEmailAddress());	
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
+			return success;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 

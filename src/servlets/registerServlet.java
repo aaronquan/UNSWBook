@@ -49,9 +49,14 @@ public class registerServlet extends HttpServlet {
 		}else{
 			User newUser = new User(username,password, email, name);
 			UserDAOImpl udi = new UserDAOImpl();
-			udi.addUser(newUser);
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
-			dispatcher.forward(request, response);
+			boolean created = udi.addUser(newUser);
+			// If user not created display some sort of error message
+			if (created) {
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				request.getRequestDispatcher("registerServlet").forward(request, response); // TODO: display that user couldn't be created
+			}
 		}
 	}
 

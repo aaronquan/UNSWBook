@@ -14,7 +14,10 @@
 <body>
 <h1>Results</h1><br>
 <% for(User u : foundUsers) { %>
-	<h3><%= u.getUsername() + " " + u.getName() + " " + u.getId() %></h3>
+<form method="post" action="">
+	<h3><%= u.getUsername() + " (" + u.getName() + ")" %></h3> <button>Add Friend</button>
+	<input type="hidden" value="<%= u.getId() %>" name="friend">
+</form>
 <% } %>
 </body>
 </html>
