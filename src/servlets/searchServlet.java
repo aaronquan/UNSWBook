@@ -41,7 +41,6 @@ public class searchServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String username = request.getParameter("keywords");
 		UserDAO udao = new UserDAOImpl();
 		List<User> users =  udao.findUsers(username);

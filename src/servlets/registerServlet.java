@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.function.Predicate;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,12 +44,12 @@ public class registerServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
-		String name = request.getParameter("first_name").concat(" ").concat(request.getParameter("surname")); //Do we care about having names be split?
-
-		if (username == null || password == null || email == null || name == null ){
+		String firstname = request.getParameter("first_name");
+		String surname = request.getParameter("surname");
+		if (username == null || password == null || email == null || firstname == null || surname == null ){
 			request.getRequestDispatcher("registerServlet").forward(request, response); // FIXME: implement proper error handling for missing fields
 		}else{
-			User newUser = new User(username,password, email, name);
+			User newUser = new User(username,password, email, firstname.concat(" ").concat(surname));
 			UserDAOImpl udi = new UserDAOImpl();
 			boolean created = udi.addUser(newUser);
 			// If user not created display some sort of error message
@@ -58,6 +60,10 @@ public class registerServlet extends HttpServlet {
 				request.getRequestDispatcher("registerServlet").forward(request, response); // TODO: display that user couldn't be created
 			}
 		}
+	}
+
+	private Predicate<? super String> isNull() {
+		return null;
 	}
 
 }

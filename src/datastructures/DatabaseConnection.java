@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabaseConnection {
 	private String dbURL;
-	private  Connection conn;
+	private Connection conn;
 	private Statement stmt;
 	
 	public DatabaseConnection(String url) {
