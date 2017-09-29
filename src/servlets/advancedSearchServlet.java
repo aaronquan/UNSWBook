@@ -58,12 +58,13 @@ public class advancedSearchServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String age = request.getParameter("age");
 		String gender = request.getParameter("gender");
-		String name = request.getParameter("first_name").concat(" ").concat(request.getParameter("surname"));
+		String firstName = request.getParameter("first_name");
+		String surname = request.getParameter("surname");
 		System.out.println(gender == "any");
 		if (gender.equals("any")) gender = "";
 		
 		UserDAO udao = new UserDAOImpl();
-		List<User> users =  udao.findUsersAdvanced(username, name, age, gender);
+		List<User> users =  udao.findUsersAdvanced(username, firstName, surname, age, gender);
 		request.setAttribute("results", users);
 		request.getRequestDispatcher("/results.jsp").forward(request, response);
 	}

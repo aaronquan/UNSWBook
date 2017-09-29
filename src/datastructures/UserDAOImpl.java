@@ -43,7 +43,7 @@ public class UserDAOImpl implements UserDAO{
 		// TODO Auto-generated method stub
 		ArrayList<User> users = new ArrayList<User>();
 		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER WHERE username like '%" + name + "%'");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER WHERE UPPER(USERNAME) LIKE UPPER('%" + name + "%') OR UPPER(NAME) LIKE UPPER('%" + name + "%')");
 			//stmt.setString(1, name);
 			boolean success = stmt.execute();
 			ResultSet results =  stmt.getResultSet();
@@ -66,17 +66,21 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	
-	public List<User> findUsersAdvanced(String uname, String name, String age, String gender) {
+	public List<User> findUsersAdvanced(String uname, String firstName, String surname, String age, String gender) {
 		// TODO Auto-generated method stub
 		ArrayList<User> users = new ArrayList<User>();
 		try {
 			String where_addition = "WHERE ";
 			if (! uname.equals("")) {
-				uname = where_addition + "USERNAME like '%" + uname + "%'";
+				uname = where_addition + "UPPER(USERNAME) LIKE UPPER('%" + uname + "%')";
 				where_addition = " AND ";
 			}
-			if (! name.equals("")) {
-				name = where_addition + "NAME like '%" + name + "%'";
+			if (! firstName.equals("")) {
+				firstName = where_addition + "UPPER(NAME) LIKE UPPER('%" + firstName + "%')";
+				where_addition = " AND ";
+			}
+			if (! surname.equals("")) {
+				surname = where_addition + "UPPER(NAME) LIKE UPPER('%" + surname + "%')";
 				where_addition = " AND ";
 			}
 			if (! age.equals("")) {
@@ -88,9 +92,7 @@ public class UserDAOImpl implements UserDAO{
 				where_addition = " AND ";
 			}
 			
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER " + uname + name + age + gender);
-			//stmt.setString(1, name);
-			System.out.println("uname: " + uname + " name: " + name + " gender: " + gender + " age: " + age);
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER " + uname + firstName + surname + age + gender);
 			
 			boolean success = stmt.execute();
 			ResultSet results =  stmt.getResultSet();

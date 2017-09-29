@@ -11,7 +11,7 @@
         </div>
         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </form>
-      
+	  <a class="btn navbar-nav" style="padding-top: 14px;" href="Profile">${user.getName()}</a>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
             <div class="dropdown-menu" role="menu">
@@ -76,10 +76,9 @@
           </div>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">${user.getName()}&#32;<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&#32;<span class="caret"></span></a>
           <ul class="dropdown-menu setting" role="menu">
-            <li><a href="Profile">Profile</a></li>
-            <li><a href="Settings">Settings</a></li>
+            <li><a href="editProfileServlet">Edit profile</a></li>
             <li class="divider"></li>
             <li><a href="Logout">Logout</a></li>
           </ul>

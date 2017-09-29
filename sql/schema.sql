@@ -7,7 +7,8 @@ create table UNSWBOOKUSER(
   NAME varchar(30) NOT NULL,
   EMAIL varchar(30) UNIQUE,
   GENDER varchar(6) CHECK (GENDER IN ('Male', 'Female', 'Other')),
-  AGE integer
+  AGE integer,
+  ISADMIN boolean DEFAULT FALSE
 );
   
 drop table UNSWBOOKPOST;
