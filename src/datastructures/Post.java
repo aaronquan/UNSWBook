@@ -8,17 +8,19 @@ public class Post {
 	private Integer postId;
 	private String postText;
 	private String imageFileName;
+	private Integer userWallId;
 	private Integer userId;
 	private Timestamp posted;
 	
 	private PostType type;
 	
 	
-	public static Post createTextPost(String postText, Integer userId, Timestamp postedBy){
+	public static Post createTextPost(String postText, Integer userId, Integer userWallId, Timestamp postedBy){
 		Post p = new Post();
 		p.posted = postedBy;
 		p.userId = userId;
 		p.postText = postText;
+		p.userWallId = userWallId;
 		p.type = PostType.Text;
 		return p;
 	}
@@ -94,6 +96,16 @@ public class Post {
 	public Timestamp getPostDate() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public Integer getUserWallId() {
+		return userWallId;
+	}
+
+
+	public void setUserWallId(Integer userWallId) {
+		this.userWallId = userWallId;
 	}
 
 }
