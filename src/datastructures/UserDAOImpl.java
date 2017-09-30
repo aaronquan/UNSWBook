@@ -26,7 +26,7 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, user.getPassword());
 			stmt.setString(3, user.getName());	
-			stmt.setString(4, user.getEmailAddress());	
+			stmt.setString(4, user.getEmailAddress());
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
 			return success;
@@ -39,7 +39,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
-	public boolean updateUser(User user, String name, String email, String gender, String age, String password) {
+	public boolean updateUser(String uid, String name, String email, String gender, String age, String password) {
 		try {
 			String set_addition = "SET ";
 			if (! name.equals("")) {
@@ -69,9 +69,10 @@ public class UserDAOImpl implements UserDAO{
 				set_addition = ", ";
 			}
 			
-			PreparedStatement stmt = conn.prepareStatement("UPDATE UNSWBOOKUSER " + name + email + age + gender + password + " WHERE ID = " + user.getId());
-			System.out.println("UPDATE UNSWBOOKUSER " + name + email + age + gender + password + " WHERE ID = " + user.getId());
+			PreparedStatement stmt = conn.prepareStatement("UPDATE UNSWBOOKUSER " + name + email + age + gender + password + " WHERE ID = " + uid);
+			System.out.println("UPDATE UNSWBOOKUSER " + name + email + age + gender + password + " WHERE ID = " + uid);
 			boolean success = stmt.execute();
+			System.out.println(success);
 			return success;
 			
 		} catch (SQLException e) {

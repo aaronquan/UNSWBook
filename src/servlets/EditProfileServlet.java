@@ -1,10 +1,8 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.function.Predicate;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,10 +40,11 @@ public class EditProfileServlet extends HttpServlet {
 		}
 		assert (dbc != null);
 		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("user") != null){
+		if (session != null && session.getAttribute("user") != null){
 			Integer userId = (Integer) session.getAttribute("user");
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId);
+			System.out.println(u);
 			request.setAttribute("user", u);
 			request.getRequestDispatcher("editProfile.jsp").forward(request, response);
 		}else{
@@ -63,6 +62,7 @@ public class EditProfileServlet extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String password = request.getParameter("password");
 		String confirm_password = request.getParameter("confirm_password");
+		String uid = request.getParameter("uid");
 		
 		Integer userId = (Integer) request.getSession(false).getAttribute("user");
 		UserDAO usd = new UserDAOImpl();
@@ -71,7 +71,7 @@ public class EditProfileServlet extends HttpServlet {
 		
 		if (password.equals(confirm_password)) {
 			UserDAO udao = new UserDAOImpl();
-			boolean successfulUpdate =  udao.updateUser(user, name, email, gender, age, confirm_password);
+			boolean successfulUpdate =  udao.updateUser(uid, name, email, gender, age, confirm_password);
 			request.setAttribute("updateSuccess", successfulUpdate);
 			System.out.println(successfulUpdate);
 			request.getRequestDispatcher("Profile").forward(request, response);

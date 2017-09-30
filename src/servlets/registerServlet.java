@@ -60,7 +60,6 @@ public class registerServlet extends HttpServlet {
 			// If user not created display some sort of error message
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
 			dispatcher.forward(request, response);
-
 		}
 	}
 

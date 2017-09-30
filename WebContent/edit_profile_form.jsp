@@ -54,5 +54,6 @@
 			<input type="submit" value="Save" class="btn btn-success">
 		  </div>
 		</div>
+		<input type="hidden" name="uid" value="${sessionScope.user}">
 	</form>
 </fieldset>

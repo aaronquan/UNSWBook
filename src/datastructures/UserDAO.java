@@ -6,7 +6,7 @@ public interface UserDAO {
 
 	boolean addUser(User user);
 
-	boolean updateUser(User user, String name, String email, String gender, String age, String password);
+	boolean updateUser(String uid, String name, String email, String gender, String age, String password);
 	
 	List<User> findUsers(String name);
 	
