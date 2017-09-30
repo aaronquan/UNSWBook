@@ -1,3 +1,4 @@
+<!-- FROM https://bootsnipp.com/snippets/7NKZW -->
 <div class="container">
 	<div class="col-md-12">
         <div class="panel panel-default">
