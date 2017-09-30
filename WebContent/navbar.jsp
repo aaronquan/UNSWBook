@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="Home" class="navbar-brand">UNSWBook</a>
+      <a class="navbar-brand">UNSWBook</a>
     </div>
       <a class="btn navbar-left" style="padding-top: 14px;" href="advancedSearchServlet">Advanced Search</a>
       <form class="navbar-form navbar-left" action="searchServlet" method="POST">
@@ -78,7 +78,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&#32;<span class="caret"></span></a>
           <ul class="dropdown-menu setting" role="menu">
-            <li><a href="EditProfileServlet">Edit profile</a></li>
+            <li><a href="editProfileServlet">Edit profile</a></li>
             <li class="divider"></li>
             <li><a href="Logout">Logout</a></li>
           </ul>

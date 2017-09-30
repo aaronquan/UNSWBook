@@ -42,6 +42,10 @@ public class Login extends HttpServlet {
 		}
 		request.setAttribute("loginMessage", this.loginMessage);
 		request.setAttribute("registrationMessage", "");
+//		request.setAttribute("username", "");
+//		request.setAttribute("email", "");
+//		request.setAttribute("firstname", "");
+//		request.setAttribute("surname", "");
 		this.loginMessage = "";
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}

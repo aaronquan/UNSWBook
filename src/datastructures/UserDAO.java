@@ -5,8 +5,6 @@ import java.util.List;
 public interface UserDAO {
 
 	boolean addUser(User user);
-
-	boolean updateUser(User user, String name, String email, String gender, String age, String password);
 	
 	List<User> findUsers(String name);
 	
@@ -17,5 +15,4 @@ public interface UserDAO {
 	Integer validate(String user, String pwd);
 
 	User lookupId(Integer id);
-	
 }

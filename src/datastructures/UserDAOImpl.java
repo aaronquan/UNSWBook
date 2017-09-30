@@ -37,50 +37,6 @@ public class UserDAOImpl implements UserDAO{
 			return false;
 		}
 	}
-	
-	@Override
-	public boolean updateUser(User user, String name, String email, String gender, String age, String password) {
-		try {
-			String set_addition = "SET ";
-			if (! name.equals("")) {
-				name = set_addition + "NAME = '" + name + "'";
-				set_addition = ", ";
-			}
-			if (! email.equals("")) {
-				email = set_addition + "EMAIL = '" + email + "'";
-				set_addition = ", ";
-			}
-			if (gender.matches("^(Male|Female|Other)$")) {
-				gender = set_addition + "GENDER = '" + gender + "'";
-				set_addition = ", ";
-			} else {
-				gender = set_addition + "GENDER = NULL";
-				set_addition = ", ";
-			}
-			if (age.matches("^[0-9]+$")) {
-				age = set_addition + "Age = " + age;
-				set_addition = ", ";
-			} else {
-				age = set_addition + "AGE = NULL";
-				set_addition = ", ";
-			}
-			if (! password.equals("")) {
-				password = set_addition + "PASSWORD = '" + password + "'";
-				set_addition = ", ";
-			}
-			
-			PreparedStatement stmt = conn.prepareStatement("UPDATE UNSWBOOKUSER " + name + email + age + gender + password + " WHERE ID = " + user.getId());
-			System.out.println("UPDATE UNSWBOOKUSER " + name + email + age + gender + password + " WHERE ID = " + user.getId());
-			boolean success = stmt.execute();
-			return success;
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-	}
 
 	@Override
 	public List<User> findUsers(String name) {
