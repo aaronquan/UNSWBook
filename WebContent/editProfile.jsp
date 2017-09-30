@@ -9,7 +9,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	    <title>UNSWBook | Edit</title>
+	    <title>UNSWBook | Search</title>
 	    <%@include file="links.html" %>
 	</head>
 

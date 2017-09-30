@@ -8,13 +8,8 @@ public class User {
 	private String password;
 	private String emailAddress;
 	private String name;
-	private Date dob;
-	
-	enum Gender {
-		Male, Female, Other
-	}
-	
-	private Gender gender;
+	private Integer age;
+	private String gender;
 
 	public String getEmailAddress() {
 		return emailAddress;
@@ -56,19 +51,19 @@ public class User {
 		this.id = id;
 	}
 
-	public Date getDob() {
-		return dob;
+	public Integer getAge() {
+		return age;
 	}
 
-	public void setDob(Date dob) {
-		this.dob = dob;
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	
