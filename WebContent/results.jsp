@@ -15,10 +15,15 @@
 		<jsp:include page="navbar.jsp"/>
 		<div class="container-fluid">
 			<h1>Results</h1>
-			<br>		  
-			<div class="list-group">
+			<% if (foundUsers.size() < 1) { %>
+				<h3>No users found.</h3>
+			<% } %>
+			<div class="list-group" style="border: 0 none;">
 				<% for(User u : foundUsers) { %>
-					<a href="Profile?method=POST&user=<%=u.getId()%>" class="list-group-item"><b><%= u.getName()%></b><%=" (" + u.getUsername() + ")" %></a>
+					<form action="Profile" id="<%=u.getId()%>_result" method="POST">
+						<a href="javascript:{}" onclick="document.getElementById('<%=u.getId()%>_result').submit();" class="list-group-item"><b><%= u.getName()%></b><%=" (" + u.getUsername() + ")" %></a>
+						<input type="hidden" value="<%=u.getId()%>" name="user">
+					</form>
 				<% } %>
 			</div>
 		</div>

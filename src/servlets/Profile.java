@@ -44,9 +44,17 @@ public class Profile extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("user") != null){
 			Integer userId = (Integer) session.getAttribute("user");
+			String profileUser = request.getParameter("user");
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId);
 			request.setAttribute("user", u);
+			if (profileUser != null && profileUser.matches("[0-9]+")) {
+				UserDAO pUsd = new UserDAOImpl();
+				User pu = pUsd.lookupId(Integer.parseInt(profileUser));
+				request.setAttribute("profileUser", pu);
+			} else {
+				request.setAttribute("profileUser", u);
+			}
 			request.getRequestDispatcher("profile.jsp").forward(request, response);
 		}else{
 			response.sendRedirect("Login");

@@ -4,14 +4,14 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	    <title>UNSWBook | ${user.getName()}</title>
+	    <title>UNSWBook | ${profileUser.getName()}</title>
 	    <%@include file="links.html" %>
 	</head>
 
 	<body>
 		<jsp:include page="navbar.jsp"/>
-		<div class="content-fluid">
-			<h1>${user.getName()} PROFILE PAGE</h1>
+		<div class="container-fluid">
+			<h1>${profileUser.getName()}</h1>
 			Show user details and a list of posts sorted by date
 		</div>
 	</body>
