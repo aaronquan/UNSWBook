@@ -15,6 +15,6 @@
 
 	<body>
 		<jsp:include page="navbar.jsp"/>
-		<jsp:include page="edit_profile_form.jsp"/>
+		<%@include file="advanced_search_form.html" %>
 	</body>
 </html>
