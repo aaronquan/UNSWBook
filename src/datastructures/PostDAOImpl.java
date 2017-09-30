@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PostDAOImpl implements PostDAO {
 
-	private String dbUrl = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
+	private String dbUrl = "jdbc:derby://localhost:1527/UNSWdatabase;create=true;user=user;password=user";
 	private Connection conn;
 	private String createTextPostStmt = "INSERT into UNSWBOOKPOST (userid, onwall, post, posted) values (?, ?, ?)";
 	private String getPostStmt = "SELECT (userid, onwall, post, posted) from UNSWBOOKPOST where id = ?";
