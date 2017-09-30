@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<jsp:include page="navbar.jsp"/>
-		<div class="container-fluid">
+		<div class="content-fluid">
 			Hello ${user.getName()} you are user ${sessionScope.user}!
 			<p>This should contain a collection of posts ordered by latest timestamp of all your friends</p>
 		</div>
