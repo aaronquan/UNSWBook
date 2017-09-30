@@ -49,3 +49,5 @@ Temporary Items
 # Classpath
 .classpath
 /bin/
+
+build
