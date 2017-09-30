@@ -1,30 +1,32 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import datastructures.DatabaseConnection;
 import datastructures.User;
 import datastructures.UserDAO;
 import datastructures.UserDAOImpl;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class searchServlet
  */
-@WebServlet("/Home")
-public class Home extends HttpServlet {
+@WebServlet("/advancedSearchServlet")
+public class advancedSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Home() {
+    public advancedSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +41,7 @@ public class Home extends HttpServlet {
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId);
 			request.setAttribute("user", u);
-			request.getRequestDispatcher("home.jsp").forward(request, response);
+			request.getRequestDispatcher("search.jsp").forward(request, response);
 		}else{
 			response.sendRedirect("Login");
 		}
@@ -49,7 +51,22 @@ public class Home extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request,response);
+		Integer userId = (Integer) request.getSession(false).getAttribute("user");
+		UserDAO usd = new UserDAOImpl();
+		User u = usd.lookupId(userId);
+		request.setAttribute("user", u);
+		String username = request.getParameter("username");
+		String age = request.getParameter("age");
+		String gender = request.getParameter("gender");
+		String firstName = request.getParameter("first_name");
+		String surname = request.getParameter("surname");
+		System.out.println(gender == "any");
+		if (gender.equals("any")) gender = "";
+		
+		UserDAO udao = new UserDAOImpl();
+		List<User> users =  udao.findUsersAdvanced(username, firstName, surname, age, gender);
+		request.setAttribute("results", users);
+		request.getRequestDispatcher("/results.jsp").forward(request, response);
 	}
 
 }

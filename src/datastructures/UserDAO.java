@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface UserDAO {
 
-	void addUser(User user);
+	boolean addUser(User user);
 	
 	List<User> findUsers(String name);
+	
+	List<User> findUsersAdvanced(String uname, String firstName, String surname, String age, String gender);
 	
 	List<User> getAllUsers();
 

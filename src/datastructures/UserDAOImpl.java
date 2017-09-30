@@ -11,6 +11,7 @@ public class UserDAOImpl implements UserDAO{
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
 	private String validateStmt = "SELECT ID FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
 	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
+	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
 
 	
 	
@@ -19,7 +20,7 @@ public class UserDAOImpl implements UserDAO{
 		conn = dbc.createConnection();
 	}
 	@Override
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(userCreateStmt);
 			stmt.setString(1, user.getUsername());
@@ -28,12 +29,13 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setString(4, user.getEmailAddress());	
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
+			return success;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
-		
 	}
 
 	@Override
@@ -41,17 +43,18 @@ public class UserDAOImpl implements UserDAO{
 		// TODO Auto-generated method stub
 		ArrayList<User> users = new ArrayList<User>();
 		try {
-			Statement stmt = conn.createStatement();
-			String query = "select * from UNSWBOOKUSER where name like " + name;
-			ResultSet results =  stmt.executeQuery(query);
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER WHERE UPPER(USERNAME) LIKE UPPER('%" + name + "%') OR UPPER(NAME) LIKE UPPER('%" + name + "%')");
+			//stmt.setString(1, name);
+			boolean success = stmt.execute();
+			ResultSet results =  stmt.getResultSet();
 			while(results.next()) {
 				int id = results.getInt(1);
 				String username = results.getString(2);
 				String password = results.getString(3);
-				User u = new User();
+				String rname = results.getString(4);
+				String email = results.getString(5);
+				User u = new User(username,password,email,rname);
 				u.setId(id);
-				u.setName(username);
-				u.setPassword(password);
 				users.add(u);
 			}
 			
@@ -61,6 +64,58 @@ public class UserDAOImpl implements UserDAO{
 		}
 		return users;
 	}
+	
+	
+	public List<User> findUsersAdvanced(String uname, String firstName, String surname, String age, String gender) {
+		// TODO Auto-generated method stub
+		ArrayList<User> users = new ArrayList<User>();
+		try {
+			String where_addition = "WHERE ";
+			if (! uname.equals("")) {
+				uname = where_addition + "UPPER(USERNAME) LIKE UPPER('%" + uname + "%')";
+				where_addition = " AND ";
+			}
+			if (! firstName.equals("")) {
+				firstName = where_addition + "UPPER(NAME) LIKE UPPER('%" + firstName + "%')";
+				where_addition = " AND ";
+			}
+			if (! surname.equals("")) {
+				surname = where_addition + "UPPER(NAME) LIKE UPPER('%" + surname + "%')";
+				where_addition = " AND ";
+			}
+			if (! age.equals("")) {
+				age = where_addition + "AGE = " + age;
+				where_addition = " AND ";
+			}
+			if (! gender.equals("")) {
+				gender = where_addition + "GENDER = '" + gender + "'";
+				where_addition = " AND ";
+			}
+			
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM UNSWBOOKUSER " + uname + firstName + surname + age + gender);
+			
+			boolean success = stmt.execute();
+			ResultSet results =  stmt.getResultSet();
+			while(results.next()) {
+				int id = results.getInt(1);
+				String username = results.getString(2);
+				String password = results.getString(3);
+				String rname = results.getString(4);
+				String email = results.getString(5);
+				User u = new User(username,password,email,rname);
+				u.setId(id);
+				users.add(u);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
+	
+	
 	@Override
 	public List<User> getAllUsers() {
 		ArrayList<User> users = new ArrayList<User>();
@@ -100,7 +155,6 @@ public class UserDAOImpl implements UserDAO{
 			return results.getInt(1);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

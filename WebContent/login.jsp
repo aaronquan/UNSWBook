@@ -9,9 +9,8 @@
 	</head>
 	
 	<body>
-<%-- 		<jsp:include page="navbar.jsp"/> --%>
 		<div class="container" style="padding-top: 5%;'">
-			<%@include file="login_registration_form.html" %>	   	
+			<jsp:include page="login_registration_form.jsp"/>
 		</div>
 	</body>
 </html>
