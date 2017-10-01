@@ -18,4 +18,6 @@ public interface UserDAO {
 
 	User lookupId(Integer id);
 	
+	boolean ban(String email);
+	
 }

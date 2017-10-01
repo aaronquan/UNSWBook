@@ -11,7 +11,8 @@ create table UNSWBOOKUSER (
   EMAIL varchar(30) UNIQUE,
   GENDER varchar(6) CHECK (GENDER IN ('Male', 'Female', 'Other')),
   AGE integer,
-  ISADMIN boolean DEFAULT FALSE
+  ISADMIN boolean DEFAULT FALSE,
+  BANNED boolean DEFAULT FALSE
 );
   
 

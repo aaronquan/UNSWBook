@@ -9,9 +9,10 @@ public class UserDAOImpl implements UserDAO{
 	private String dbUrl = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
 	private Connection conn;
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
-	private String validateStmt = "SELECT ID FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
+	private String validateStmt = "SELECT (ID, BANNED) FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
 	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
 	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
+	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where email=?";
 
 	
 	
@@ -197,7 +198,11 @@ public class UserDAOImpl implements UserDAO{
 			if (!success) return null;
 			ResultSet results = stmt.getResultSet();
 			results.next();
-			return results.getInt(1);
+			if (results.getBoolean("BANNED")){
+				return -1;
+			}else{
+				return results.getInt("ID");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -222,6 +227,19 @@ public class UserDAOImpl implements UserDAO{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	@Override
+	public boolean ban(String email) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(banStmt);
+			stmt.setString(1, email);
+			System.out.println(stmt.toString());
+			return stmt.executeUpdate()==0 ? false : true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
