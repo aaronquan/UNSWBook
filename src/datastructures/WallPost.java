@@ -11,13 +11,15 @@ public class WallPost {
 	public Timestamp date;
 	public List<String> likedBy;
 	public Integer id;
+	public Integer idOfAuthor;
 	
-	public WallPost(Integer id, String author, String content, Timestamp date){
+	public WallPost(Integer id, String author, String content, Timestamp date, Integer idOfAuthor){
 		this.id = id;
 		this.author = author;
 		this.content = content;
 		this.date = date;
 		this.likedBy = new ArrayList<String>();
+		this.idOfAuthor = idOfAuthor;
 	}
 
 	public String getAuthor() {
@@ -58,5 +60,13 @@ public class WallPost {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getIdOfAuthor() {
+		return idOfAuthor;
+	}
+	
+	public void setIdOfAuthor(Integer idOfAuthor) {
+		this.idOfAuthor = idOfAuthor;
 	}
 }

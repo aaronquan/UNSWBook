@@ -16,18 +16,47 @@
 	<body>
 		<jsp:include page="navbar.jsp"/>
 		<div class="container-fluid">
-			<h1>${profileUser.getName()}</h1>
-			Show user details and a list of posts sorted by date
+			<h1>${profileUser.getName()} (${profileUser.getUsername()})</h1>
 			<br><jsp:include page="createPost.jsp"/><br>
 			<% if (allPosts != null) {
 				for (WallPost p : allPosts) { %>
-				<p>Author: <%=p.getAuthor()%></p>
-				<p>Date: <%=p.getDate()%></p>
-				<p>Content: <%=p.getContent()%></p>
-				<p>Number of likes: <%=p.getLikedBy().size()%></p>
+				<div class="container">
+					<div class="col-md-12">
+				        <div class="panel panel-default">
+				            <div class="panel-body">
+				               <section class="post-heading">
+				                    <div class="row">
+				                        <div class="col-md-12">
+				                            <div class="media">
+				                              <div class="media-body">
+				                                <form action="Profile" id="<%=p.getIdOfAuthor()%>_result" method="POST">
+				                                	<a href="javascript:{}" onclick="document.getElementById('<%=p.getIdOfAuthor()%>_result').submit();" class="anchor-username"><h4 class="media-heading"><%=p.getAuthor()%></h4></a>
+				                                	 <input type="hidden" value="<%=p.getIdOfAuthor()%>" name="user">
+												</form>
+				                                <p class="anchor-time"><%=p.getDate()%></p>
+				                              </div>
+				                            </div>
+				                        </div>
+				                    </div>             
+				               </section>
+				               <br>
+				               <section class="post-body">
+				                   <p><%=p.getContent()%></p>
+				               </section>
+				               <section class="post-footer">
+				                   <hr>
+				                   <div class="post-footer-option container">
+				                        <ul class="list-unstyled">
+				                            <li><a href="LikePostServlet"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
+				                        </ul>
+				                   </div>
+				               </section>
+				            </div>
+				        </div>   
+					</div>
+				</div>		
 				<% }
 			} %>
-			<br><jsp:include page="post.jsp"/>
 		</div>
 	</body>
 </html>

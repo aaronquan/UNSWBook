@@ -65,14 +65,6 @@ public class Profile extends HttpServlet {
 				allPosts =  pdao.getWall(userId);
 			}
 			
-			// TO REMOVE vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-			if (allPosts != null) {
-				for (WallPost p : allPosts) {
-					System.out.println(p.getContent());
-				}
-			}
-			// TO REMOVE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-			
 			request.setAttribute("allPosts", allPosts);
 			request.getRequestDispatcher("profile.jsp").forward(request, response);
 		}else{

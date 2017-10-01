@@ -13,10 +13,9 @@ public class PostDAOImpl implements PostDAO {
 	private Connection conn;
 	private String createTextPostStmt = "INSERT into UNSWBOOKPOST (userid, onwall, post, posted) values (?, ?, ?, CURRENT_TIMESTAMP)";
 	private String getPostStmt = "SELECT userid, onwall, post, posted from UNSWBOOKPOST where id = ?";
-	private String getWallStmt = "SELECT name, post, posted, UNSWBOOKPOST.id from UNSWBOOKPOST "
+	private String getWallStmt = "SELECT name, post, posted, UNSWBOOKPOST.id, UNSWBOOKUSER.id as idAuthor from UNSWBOOKPOST "
 			+ "INNER JOIN UNSWBOOKUSER ON onwall=? and userid=UNSWBOOKUSER.id ORDER BY posted DESC";
-	private String getLikedStmt = "SELECT name from UNSWBOOKLIKE INNER JOIN UNSWBOOKUSER"
-			+ "WHERE post=? AND likedby=UNSWBOOKUSER.id";
+	private String getLikedStmt = "SELECT name from UNSWBOOKUSER WHERE ID in (SELECT LIKEDBY FROM UNSWBOOKPOSTLIKES WHERE POST=?)";
 			
 
 	public PostDAOImpl() {
@@ -68,7 +67,7 @@ public class PostDAOImpl implements PostDAO {
 			ResultSet results = stmt.getResultSet();
 			List<WallPost> xs = new ArrayList<WallPost>();
 			while(results.next()){
-				xs.add(new WallPost(results.getInt("id"), results.getString("name"), results.getString("post"), results.getTimestamp("posted")));
+				xs.add(new WallPost(results.getInt("id"), results.getString("name"), results.getString("post"), results.getTimestamp("posted"), results.getInt("idAuthor")));
 			}
 			results.close();
 			for (WallPost p : xs){
