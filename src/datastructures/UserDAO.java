@@ -22,4 +22,8 @@ public interface UserDAO {
 	
 	boolean isFriend(Integer user, Integer user2);
 	
+	public Integer validateAdmin(String user, String pwd);
+	
+	public Boolean isAdmin(Integer userId);
+	
 }

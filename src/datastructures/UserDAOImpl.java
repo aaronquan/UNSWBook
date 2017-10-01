@@ -9,12 +9,13 @@ public class UserDAOImpl implements UserDAO{
 	private String dbUrl = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
 	private Connection conn;
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
-	private String validateStmt = "SELECT ID, BANNED FROM UNSWBOOKUSER WHERE username=? AND pwd=?";
+	private String validateStmt = "SELECT ID, BANNED FROM UNSWBOOKUSER WHERE username=? AND pwd=? AND isadmin=?";
 	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
 	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
 	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where email=?";
 	private String isFriendStmt = "SELECT 1 FROM UNSWBOOKFRIEND where (person_a=? and person_b=?) "
 			+ "or (person_a=? and person_b=?)";
+	private String isAdminStmt = "SELECT 1 from UNSWBOOKUSER where id=? and isadmin=true";
 	
 	
 	public UserDAOImpl() {
@@ -194,6 +195,29 @@ public class UserDAOImpl implements UserDAO{
 			PreparedStatement stmt = conn.prepareStatement(validateStmt);
 			stmt.setString(1, user);
 			stmt.setString(2, pwd);
+			stmt.setBoolean(3, false);
+			boolean success = stmt.execute();
+			if (!success) return null;
+			ResultSet results = stmt.getResultSet();
+			results.next();
+			if (results.getBoolean("BANNED")){
+				return -1;
+			}else{
+				return results.getInt("ID");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -2;
+		}
+	}
+	
+	public Integer validateAdmin(String user, String pwd) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(validateStmt);
+			stmt.setString(1, user);
+			stmt.setString(2, pwd);
+			stmt.setBoolean(3, true);
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
 			if (!success) return null;
@@ -249,6 +273,18 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setInt(1, user);
 			stmt.setInt(2, user2);
 			System.out.println(stmt.toString());
+			return (stmt.execute());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	@Override
+	public Boolean isAdmin(Integer userId) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(isFriendStmt);
+			stmt.setInt(1, userId);
 			return (stmt.execute());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
