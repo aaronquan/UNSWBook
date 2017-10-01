@@ -17,7 +17,7 @@ public class PostDAOImpl implements PostDAO {
 			+ "INNER JOIN UNSWBOOKUSER ON onwall=? and userid=UNSWBOOKUSER.id ORDER BY posted DESC";
 	private String getLikedStmt = "SELECT name from UNSWBOOKUSER WHERE ID in (SELECT LIKEDBY FROM UNSWBOOKPOSTLIKES WHERE POST=?)";
 	private String likePostStmt = "INSERT into UNSWBOOKPOSTLIKES (POST, LIKEDBY) values (?, ?)";
-	private String checkIfLikedStmt = "SELECT COUNT(*) FROM UNSWBOOKPOSTLIKES WHERE POST = ? AND LIKEDBY = ?";
+	private String deleteLikeStmt = "DELETE FROM UNSWBOOKPOSTLIKES WHERE POST = ? AND LIKEDBY = ?";
 			
 
 	public PostDAOImpl() {
@@ -94,7 +94,27 @@ public class PostDAOImpl implements PostDAO {
 	@Override
 	public boolean likePost(Like like) {
 		try {
-			PreparedStatement stmt = conn.prepareStatement(likePostStmt);
+			PreparedStatement stmt = conn.prepareStatement(deleteLikeStmt);
+			stmt.setInt(1, like.getPostId());
+			stmt.setInt(2, like.getUserId());
+			boolean success = stmt.execute();
+			
+			stmt = conn.prepareStatement(likePostStmt);
+			stmt.setInt(1, like.getPostId());
+			stmt.setInt(2, like.getUserId());
+			success = stmt.execute();
+			return success;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean unlikePost(Like like) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(deleteLikeStmt);
 			stmt.setInt(1, like.getPostId());
 			stmt.setInt(2, like.getUserId());
 			boolean success = stmt.execute();

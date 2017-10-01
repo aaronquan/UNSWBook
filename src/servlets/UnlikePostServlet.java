@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import datastructures.DatabaseConnection;
+import datastructures.Like;
 import datastructures.Post;
-import datastructures.PostDAO;
 import datastructures.PostDAOImpl;
-import datastructures.WallPost;
 import datastructures.User;
 import datastructures.UserDAO;
 import datastructures.UserDAOImpl;
@@ -22,14 +21,14 @@ import datastructures.UserDAOImpl;
 /**
  * Servlet implementation class Profile
  */
-@WebServlet("/Profile")
-public class Profile extends HttpServlet {
+@WebServlet("/UnlikePostServlet")
+public class UnlikePostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Profile() {
+    public UnlikePostServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,27 +46,32 @@ public class Profile extends HttpServlet {
 		}
 		assert (dbc != null);
 		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("user") != null){
+		if (session == null || session.getAttribute("user") != null) {
 			Integer userId = (Integer) session.getAttribute("user");
-			String profileUser = request.getParameter("user");
-			PostDAO pdao = new PostDAOImpl();
-			List<WallPost> allPosts;
 			UserDAO usd = new UserDAOImpl();
-			User u = usd.lookupId(userId);
+			User u = usd.lookupId(userId); 
 			request.setAttribute("user", u);
-			request.setAttribute("name", u.getName());
+			Integer postId = (Integer) request.getAttribute("postId");
+			
+			System.out.println("user: " + userId + " post: " + postId);
+			
+			if (userId != null && postId != null) {
+				Like like = new Like(postId, userId);
+				PostDAOImpl pdi = new PostDAOImpl();
+				pdi.unlikePost(like);
+			}
+			
+			String profileUser = request.getParameter("user");
+			
 			if (profileUser != null && profileUser.matches("[0-9]+")) {
 				UserDAO pUsd = new UserDAOImpl();
 				User pu = pUsd.lookupId(Integer.parseInt(profileUser));
 				request.setAttribute("profileUser", pu);
-				allPosts =  pdao.getWall(Integer.parseInt(profileUser));
 			} else {
 				request.setAttribute("profileUser", u);
-				allPosts =  pdao.getWall(userId);
 			}
 			
-			request.setAttribute("allPosts", allPosts);
-			request.getRequestDispatcher("profile.jsp").forward(request, response);
+			response.sendRedirect("Profile");
 		}else{
 			response.sendRedirect("Login");
 		}
