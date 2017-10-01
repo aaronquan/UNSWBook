@@ -12,9 +12,9 @@ public class PostDAOImpl implements PostDAO {
 	private String dbUrl = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
 	private Connection conn;
 	private String createTextPostStmt = "INSERT into UNSWBOOKPOST (userid, onwall, post, posted) values (?, ?, ?, CURRENT_TIMESTAMP)";
-	private String getPostStmt = "SELECT (userid, onwall, post, posted) from UNSWBOOKPOST where id = ?";
-	private String getWallStmt = "SELECT (name, post, posted, id) from UNSWBOOKPOST "
-			+ "INNER JOIN UNSWBOOKUSER WHERE onwall=? and userid=UNSWBOOKUSER.id ORDER BY posted DESC";
+	private String getPostStmt = "SELECT userid, onwall, post, posted from UNSWBOOKPOST where id = ?";
+	private String getWallStmt = "SELECT name, post, posted, UNSWBOOKPOST.id from UNSWBOOKPOST "
+			+ "INNER JOIN UNSWBOOKUSER ON onwall=? and userid=UNSWBOOKUSER.id ORDER BY posted DESC";
 	private String getLikedStmt = "SELECT name from UNSWBOOKLIKE INNER JOIN UNSWBOOKUSER"
 			+ "WHERE post=? AND likedby=UNSWBOOKUSER.id";
 			
@@ -31,10 +31,8 @@ public class PostDAOImpl implements PostDAO {
 			stmt.setInt(1, post.getUserId());
 			stmt.setInt(2, post.getUserWallId());
 			stmt.setString(3, post.getPostText());
-			
 			boolean success = stmt.execute();
 			return success;
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
