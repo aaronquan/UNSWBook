@@ -51,9 +51,9 @@ public class UnlikePostServlet extends HttpServlet {
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId); 
 			request.setAttribute("user", u);
-			Integer postId = (Integer) request.getAttribute("postId");
+			Integer postId = Integer.parseInt(request.getParameter("postId"));
 			
-			System.out.println("user: " + userId + " post: " + postId);
+			System.out.println("UNLIKE: user: " + userId + " post: " + postId);
 			
 			if (userId != null && postId != null) {
 				Like like = new Like(postId, userId);

@@ -59,7 +59,7 @@
 				               <section class="post-footer">
 				                   <hr>
 				                   <% if (p.getLikedBy().contains(name)) { %>
-				                	   <form action="LikePostServlet" method="POST" id="<%=p.getId()%>_post">
+				                	   <form action="UnlikePostServlet" method="POST" id="<%=p.getId()%>_post">
 						                   <div class="post-footer-option container">
 						                        <ul class="list-unstyled">
 						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Unlike (<%=p.getLikedBy().size()%>)</a></li>
@@ -69,7 +69,7 @@
 						                   <input type="hidden" name="userId" value="${sessionScope.user}">
 					                   </form>
 				                   <% } else { %>
-					                   <form action="UnlikePostServlet" method="POST" id="<%=p.getId()%>_post">
+					                   <form action="LikePostServlet" method="POST" id="<%=p.getId()%>_post">
 						                   <div class="post-footer-option container">
 						                        <ul class="list-unstyled">
 						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
