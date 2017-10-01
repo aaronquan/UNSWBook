@@ -13,7 +13,8 @@ public class UserDAOImpl implements UserDAO{
 	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
 	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
 	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where email=?";
-
+	private String isFriendStmt = "SELECT 1 FROM UNSWBOOKFRIEND where (person_a=? and person_b=?) "
+			+ "or (person_a=? and person_b=?)";
 	
 	
 	public UserDAOImpl() {
@@ -235,6 +236,20 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setString(1, email);
 			System.out.println(stmt.toString());
 			return stmt.executeUpdate()==0 ? false : true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
+	@Override
+	public boolean isFriend(Integer user, Integer user2) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(isFriendStmt);
+			stmt.setInt(1, user);
+			stmt.setInt(2, user2);
+			System.out.println(stmt.toString());
+			return (stmt.execute());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

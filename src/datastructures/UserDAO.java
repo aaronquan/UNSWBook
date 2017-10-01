@@ -20,4 +20,6 @@ public interface UserDAO {
 	
 	boolean ban(String email);
 	
+	boolean isFriend(Integer user, Integer user2);
+	
 }
