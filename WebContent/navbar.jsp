@@ -11,65 +11,20 @@
         </div>
         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </form>
-	  <a class="btn navbar-nav" style="padding-top: 14px;" href="Profile">${user.getName()}</a>
+	  
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
-            <div class="dropdown-menu" role="menu">
-            <div class="media">
-              <a class="media-left" href="#">
-               <img src="http://placehold.it/64x64&text=Mirchu.net" alt="ALT NAME">
-              </a>
-              <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
-                Cras sit amet nibh libero, in gravida nulla.
-              </div>
-            </div>
-            <div class="media">
-              <a class="media-left" href="#">
-               <img src="http://placehold.it/64x64&text=Mirchu.net" alt="ALT NAME">
-              </a>
-              <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
-                Cras sit amet nibh libero, in gravida nulla.
-              </div>
-            </div>
-            <div class="media">
-              <a class="media-left" href="#">
-               <img src="http://placehold.it/64x64&text=Mirchu.net" alt="ALT NAME">
-              </a>
-              <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
-                Cras sit amet nibh libero, in gravida nulla.
-              </div>
-            </div>
-          </div>   
-        </li>
+      	<a class="btn navbar-nav" style="padding-top: 14px;" href="Profile">${user.getName()}</a>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-globe"></span></a>
-            <div class="dropdown-menu" role="menu">
+          <div class="dropdown-menu" role="menu">
             <div class="media">
-              <a class="media-left" href="#">
-               <img src="http://placehold.it/64x64&text=Mirchu.net" alt="ALT NAME">
-              </a>
               <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
+                <h4 class="media-heading">BLAH LIKED YOUR POST</h4>
                 Cras sit amet nibh libero, in gravida nulla.
               </div>
             </div>
             <div class="media">
-              <a class="media-left" href="#">
-               <img src="http://placehold.it/64x64&text=Mirchu.net" alt="ALT NAME">
-              </a>
               <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
-                Cras sit amet nibh libero, in gravida nulla.
-              </div>
-            </div>
-            <div class="media">
-              <a class="media-left" href="#">
-               <img src="http://placehold.it/64x64&text=Mirchu.net" alt="ALT NAME">
-              </a>
-              <div class="media-body">
-                <h4 class="media-heading">Media heading</h4>
+                <h4 class="media-heading">BLAH POSTED ON YOUR WALL</h4>
                 Cras sit amet nibh libero, in gravida nulla.
               </div>
             </div>

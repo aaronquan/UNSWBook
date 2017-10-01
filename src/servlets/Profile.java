@@ -55,6 +55,7 @@ public class Profile extends HttpServlet {
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId);
 			request.setAttribute("user", u);
+			request.setAttribute("name", u.getName());
 			if (profileUser != null && profileUser.matches("[0-9]+")) {
 				UserDAO pUsd = new UserDAOImpl();
 				User pu = pUsd.lookupId(Integer.parseInt(profileUser));

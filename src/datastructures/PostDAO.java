@@ -12,4 +12,6 @@ public interface PostDAO {
 
 	boolean likePost(Like like);
 
+	boolean unlikePost(Like like);
+
 }
