@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PostDAOImpl implements PostDAO {
 
-	private String dbUrl = "jdbc:derby://localhost:1527/UNSWdatabase;create=true;user=user;password=user";
+	private String dbUrl = "jdbc:derby://localhost:1527/UNSWDatabase;create=true;user=user;password=user";
 	private Connection conn;
 	private String createTextPostStmt = "INSERT into UNSWBOOKPOST (userid, onwall, post, posted) values (?, ?, ?, CURRENT_TIMESTAMP)";
 	private String getPostStmt = "SELECT (userid, onwall, post, posted) from UNSWBOOKPOST where id = ?";
@@ -24,13 +24,14 @@ public class PostDAOImpl implements PostDAO {
 		conn = dbc.createConnection();
 	}
 	
+	@Override
 	public boolean createTextPost(Post post) {
-		try {
+		try {			
 			PreparedStatement stmt = conn.prepareStatement(createTextPostStmt);
 			stmt.setInt(1, post.getUserId());
 			stmt.setInt(2, post.getUserWallId());
 			stmt.setString(3, post.getPostText());
-			System.out.println(stmt.toString());
+			
 			boolean success = stmt.execute();
 			return success;
 			

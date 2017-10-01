@@ -13,9 +13,8 @@
 		<div class="container-fluid">
 			<h1>${profileUser.getName()}</h1>
 			Show user details and a list of posts sorted by date
-			<jsp:include page="createPost.jsp"/>
-			<br>
-			<jsp:include page="post.jsp"/>
+			<br><jsp:include page="createPost.jsp"/>
+			<br><jsp:include page="post.jsp"/>
 		</div>
 	</body>
 </html>
