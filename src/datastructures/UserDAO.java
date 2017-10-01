@@ -21,5 +21,7 @@ public interface UserDAO {
 	boolean ban(String email);
 	
 	boolean isFriend(Integer user, Integer user2);
+
+	boolean addFriend(int personA, int personB);
 	
 }

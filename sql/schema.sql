@@ -1,6 +1,6 @@
+drop table UNSWBOOKPOST;
 drop table UNSWBOOKFRIENDS;
 drop table UNSWBOOKPOSTLIKES;
-drop table UNSWBOOKPOST;
 drop table UNSWBOOKUSER;
 
 create table UNSWBOOKUSER (
@@ -27,7 +27,9 @@ create table UNSWBOOKPOST (
 create table UNSWBOOKFRIENDS (
   ID integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,
   PERSON_A integer references UNSWBOOKUSER(ID),
-  PERSON_B integer references UNSWBOOKUSER(ID)
+  PERSON_B integer references UNSWBOOKUSER(ID),
+  CONFIRMED boolean
+  
 );
 
 create table UNSWBOOKPOSTLIKES (
