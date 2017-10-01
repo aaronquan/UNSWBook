@@ -54,17 +54,10 @@ public class PostServlet extends HttpServlet {
 			String profileUser = request.getParameter("user");
 			String content = request.getParameter("postContent");
 
-			if (profileUser != null && profileUser.matches("[0-9]+")) {
-				UserDAO pUsd = new UserDAOImpl();
-				User pu = pUsd.lookupId(Integer.parseInt(profileUser));
-				request.setAttribute("profileUser", pu);
-				newPost = Post.createTextPost(content, userId, Integer.parseInt(profileUser), new Timestamp(System.currentTimeMillis()));
-				System.out.println("posting to other!: " +content + " " + userId + " " + Integer.parseInt(profileUser));
-			} else {
-				request.setAttribute("profileUser", u);
-				newPost = Post.createTextPost(content, userId, userId, new Timestamp(System.currentTimeMillis()));
-				System.out.println("posting to self!: " + content + " " + userId + " " + userId);
-			}
+			request.setAttribute("profileUser", u);
+			newPost = Post.createTextPost(content, userId, userId, new Timestamp(System.currentTimeMillis()));
+			System.out.println("posting to self!: " + content + " " + userId + " " + userId);
+			
 			if (content != null && (! content.equals(""))) {
 				PostDAOImpl pdi = new PostDAOImpl();
 				pdi.createTextPost(newPost);

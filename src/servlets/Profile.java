@@ -55,14 +55,17 @@ public class Profile extends HttpServlet {
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId);
 			request.setAttribute("user", u);
-			request.setAttribute("name", u.getName());
+			request.setAttribute("uid", (String) Integer.toString(userId));
+			request.setAttribute("name", (String) u.getName());
 			if (profileUser != null && profileUser.matches("[0-9]+")) {
 				UserDAO pUsd = new UserDAOImpl();
 				User pu = pUsd.lookupId(Integer.parseInt(profileUser));
 				request.setAttribute("profileUser", pu);
+				request.setAttribute("pid", profileUser);
 				allPosts =  pdao.getWall(Integer.parseInt(profileUser));
 			} else {
 				request.setAttribute("profileUser", u);
+				request.setAttribute("pid", Integer.toString(userId));
 				allPosts =  pdao.getWall(userId);
 			}
 			
