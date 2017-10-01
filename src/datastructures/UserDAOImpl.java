@@ -10,7 +10,7 @@ public class UserDAOImpl implements UserDAO{
 	private Connection conn;
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
 	private String validateStmt = "SELECT ID, BANNED FROM UNSWBOOKUSER WHERE username=? AND pwd=? AND isadmin=?";
-	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
+	private String lookupStmt = "SELECT username, pwd, name, email, gender, age FROM UNSWBOOKUSER WHERE id=?";
 	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
 	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where email=?";
 	private String isFriendStmt = "SELECT 1 FROM UNSWBOOKFRIENDS where (person_a=? and person_b=? and confirmed=true) "
@@ -275,6 +275,8 @@ public class UserDAOImpl implements UserDAO{
 			ResultSet results = stmt.getResultSet();
 			results.next();
 			User u = new User(results.getString("username"), results.getString("pwd"), results.getString("email"), results.getString("name"));
+			u.setAge(results.getInt("age"));
+			u.setGender(results.getString("gender"));
 			return u;
 			
 		} catch (SQLException e) {
