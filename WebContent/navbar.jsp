@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="Home" class="navbar-brand">UNSWBook</a>
+      <a class="navbar-brand">UNSWBook</a>
     </div>
       <a class="btn navbar-left" style="padding-top: 14px;" href="advancedSearchServlet">Advanced Search</a>
       <form class="navbar-form navbar-left" action="searchServlet" method="POST">

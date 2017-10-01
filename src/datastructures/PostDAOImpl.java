@@ -11,7 +11,7 @@ public class PostDAOImpl implements PostDAO {
 
 	private String dbUrl = "jdbc:derby://localhost:1527/UNSWdatabase;create=true;user=user;password=user";
 	private Connection conn;
-	private String createTextPostStmt = "INSERT into UNSWBOOKPOST (userid, onwall, post, posted) values (?, ?, ?)";
+	private String createTextPostStmt = "INSERT into UNSWBOOKPOST (userid, onwall, post, posted) values (?, ?, ?, CURRENT_TIMESTAMP)";
 	private String getPostStmt = "SELECT (userid, onwall, post, posted) from UNSWBOOKPOST where id = ?";
 	private String getWallStmt = "SELECT (name, post, posted, id) from UNSWBOOKPOST "
 			+ "INNER JOIN UNSWBOOKUSER WHERE onwall=? and userid=UNSWBOOKUSER.id ORDER BY posted DESC";
@@ -30,7 +30,6 @@ public class PostDAOImpl implements PostDAO {
 			stmt.setInt(1, post.getUserId());
 			stmt.setInt(2, post.getUserWallId());
 			stmt.setString(3, post.getPostText());
-			stmt.setTimestamp(4, post.getPostedBy());
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
 			return success;

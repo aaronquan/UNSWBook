@@ -208,7 +208,6 @@ public class UserDAOImpl implements UserDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 	@Override
 	public User lookupId(Integer id) {

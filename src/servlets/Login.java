@@ -71,7 +71,7 @@ public class Login extends HttpServlet {
 				login.setAttribute("user", id);
 				Integer expiry = 15 * 60; 
 				login.setMaxInactiveInterval(expiry);
-				response.sendRedirect("Home");
+				response.sendRedirect("Profile");
 			}
 		}
 	}

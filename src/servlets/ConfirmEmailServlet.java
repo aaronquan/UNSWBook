@@ -53,8 +53,8 @@ public class ConfirmEmailServlet extends HttpServlet {
 				UserDAOImpl udi = new UserDAOImpl();
 				boolean created = udi.addUser(newUser);
 				// If user not created display some sort of error message
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Login");
-				dispatcher.forward(request, response);
+				response.sendRedirect("Login");
+//				dispatcher.forward(request, response);
 			} 
 	}
 
