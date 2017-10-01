@@ -16,7 +16,9 @@
 	<body>
 		<jsp:include page="navbar.jsp"/>
 		<div class="container-fluid">
+			<div class="container">
 			<h1>${profileUser.getName()} (${profileUser.getUsername()})</h1>
+			</div>
 			<br><jsp:include page="createPost.jsp"/><br>
 			<% if (allPosts != null) {
 				for (WallPost p : allPosts) { %>
@@ -29,8 +31,8 @@
 				                        <div class="col-md-12">
 				                            <div class="media">
 				                              <div class="media-body">
-				                                <form action="Profile" id="<%=p.getIdOfAuthor()%>_result" method="POST">
-				                                	<a href="javascript:{}" onclick="document.getElementById('<%=p.getIdOfAuthor()%>_result').submit();" class="anchor-username"><h4 class="media-heading"><%=p.getAuthor()%></h4></a>
+				                                <form action="Profile" id="<%=p.getIdOfAuthor()%>_author" method="POST">
+				                                	<a href="javascript:{}" onclick="document.getElementById('<%=p.getIdOfAuthor()%>_author').submit();" class="anchor-username"><h4 class="media-heading"><%=p.getAuthor()%></h4></a>
 				                                	 <input type="hidden" value="<%=p.getIdOfAuthor()%>" name="user">
 												</form>
 				                                <p class="anchor-time"><%=p.getDate()%></p>
@@ -45,11 +47,15 @@
 				               </section>
 				               <section class="post-footer">
 				                   <hr>
-				                   <div class="post-footer-option container">
-				                        <ul class="list-unstyled">
-				                            <li><a href="LikePostServlet"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
-				                        </ul>
-				                   </div>
+				                   <form action="LikePostServlet" method="POST" id="<%=p.getId()%>_post">
+					                   <div class="post-footer-option container">
+					                        <ul class="list-unstyled">
+					                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
+					                        </ul>
+					                   </div>
+					                   <input type="hidden" name="postId" value="<%=p.getId()%>">
+					                   <input type="hidden" name="userId" value="${sessionScope.user}">
+				                   </form>
 				               </section>
 				            </div>
 				        </div>   
