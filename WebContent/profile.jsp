@@ -3,7 +3,9 @@
 <%@ page import="datastructures.*, java.util.*"%>
 <% 
 	List<WallPost> allPosts = (List<WallPost>) request.getAttribute("allPosts");
-	String name = request.getParameter("name");
+	String name = (String) request.getAttribute("name");
+	String uid = (String) request.getAttribute("uid");
+	String pid = (String) request.getAttribute("pid");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,7 +25,12 @@
 			<h4>Age: ${profileUser.getAge()}</h4>
 			<h4>Gender: ${profileUser.getGender()}</h4>
 			</div>
-			<br><jsp:include page="createPost.jsp"/><br>
+			<br>
+
+			<% if (uid.equals(pid))  {%>
+				<jsp:include page="createPost.jsp"/><br>
+			<% } %>
+
 			<% if (allPosts != null) {
 				for (WallPost p : allPosts) { %>
 				<div class="container">
@@ -55,7 +62,7 @@
 				                	   <form action="LikePostServlet" method="POST" id="<%=p.getId()%>_post">
 						                   <div class="post-footer-option container">
 						                        <ul class="list-unstyled">
-						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
+						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Unlike (<%=p.getLikedBy().size()%>)</a></li>
 						                        </ul>
 						                   </div>
 						                   <input type="hidden" name="postId" value="<%=p.getId()%>">
@@ -65,14 +72,13 @@
 					                   <form action="UnlikePostServlet" method="POST" id="<%=p.getId()%>_post">
 						                   <div class="post-footer-option container">
 						                        <ul class="list-unstyled">
-						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Unlike (<%=p.getLikedBy().size()%>)</a></li>
+						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
 						                        </ul>
 						                   </div>
 						                   <input type="hidden" name="postId" value="<%=p.getId()%>">
 						                   <input type="hidden" name="userId" value="${sessionScope.user}">
 					                   </form>
 				                   <% } %>
-				                   
 				               </section>
 				            </div>
 				        </div>   

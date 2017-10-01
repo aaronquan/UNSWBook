@@ -13,7 +13,6 @@
 		    		        <button type="submit" id="create_post_button" class="btn btn-primary">Post</button>
 		    		    </div>
 		    		    <input type="hidden" name="user" value="${profileUser}">
-		    		    ${profileUser.getId()}
 		    		</form>
 				</div>
 			</div>
