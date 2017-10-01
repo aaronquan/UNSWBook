@@ -65,7 +65,7 @@ public class Login extends HttpServlet {
 			}else if(id == -1){
 				this.loginMessage = "You have been BANNED. >=[";
 				doGet(request, response);
-			}else{
+			} else {
 				this.loginMessage = "";
 				HttpSession login = request.getSession(true);
 				login.setAttribute("user", id);

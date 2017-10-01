@@ -10,4 +10,6 @@ public interface PostDAO {
 	
 	List<WallPost> getWall(Integer userId);
 
+	boolean likePost(Like like);
+
 }

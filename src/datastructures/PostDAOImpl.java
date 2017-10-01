@@ -16,6 +16,8 @@ public class PostDAOImpl implements PostDAO {
 	private String getWallStmt = "SELECT name, post, posted, UNSWBOOKPOST.id, UNSWBOOKUSER.id as idAuthor from UNSWBOOKPOST "
 			+ "INNER JOIN UNSWBOOKUSER ON onwall=? and userid=UNSWBOOKUSER.id ORDER BY posted DESC";
 	private String getLikedStmt = "SELECT name from UNSWBOOKUSER WHERE ID in (SELECT LIKEDBY FROM UNSWBOOKPOSTLIKES WHERE POST=?)";
+	private String likePostStmt = "INSERT into UNSWBOOKPOSTLIKES (POST, LIKEDBY) values (?, ?)";
+	private String checkIfLikedStmt = "SELECT COUNT(*) FROM UNSWBOOKPOSTLIKES WHERE POST = ? AND LIKEDBY = ?";
 			
 
 	public PostDAOImpl() {
@@ -86,6 +88,21 @@ public class PostDAOImpl implements PostDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	@Override
+	public boolean likePost(Like like) {
+		try {
+			PreparedStatement stmt = conn.prepareStatement(likePostStmt);
+			stmt.setInt(1, like.getPostId());
+			stmt.setInt(2, like.getUserId());
+			boolean success = stmt.execute();
+			return success;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
 		}
 	}
 
