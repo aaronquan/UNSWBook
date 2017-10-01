@@ -229,7 +229,7 @@ public class UserDAOImpl implements UserDAO{
 			boolean success = stmt.execute();
 			if (!success) return null;
 			ResultSet results = stmt.getResultSet();
-			results.next();
+			if (!results.next()) return null;
 			if (results.getBoolean("BANNED")){
 				return -1;
 			}else{
@@ -252,7 +252,7 @@ public class UserDAOImpl implements UserDAO{
 			boolean success = stmt.execute();
 			if (!success) return null;
 			ResultSet results = stmt.getResultSet();
-			results.next();
+			if (!results.next()) return null;
 			if (results.getBoolean("BANNED")){
 				return -1;
 			}else{
