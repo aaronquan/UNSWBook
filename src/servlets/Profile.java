@@ -62,9 +62,19 @@ public class Profile extends HttpServlet {
 				User pu = pUsd.lookupId(Integer.parseInt(profileUser));
 				request.setAttribute("profileUser", pu);
 				request.setAttribute("pid", profileUser);
+				if (pUsd.isFriend(userId, Integer.parseInt(profileUser))) {
+					System.out.println(pUsd.isFriend(userId, Integer.parseInt(profileUser)));
+					System.out.println("THEY ARE FRIENDS");
+					request.setAttribute("isFriend", "true");
+				} else {
+					request.setAttribute("isFriend", "false");
+					System.out.println("THEY ARE NOT FRIENDS");
+				}
+				
 				allPosts =  pdao.getWall(Integer.parseInt(profileUser));
 			} else {
 				request.setAttribute("profileUser", u);
+				request.setAttribute("isFriend", "true");
 				request.setAttribute("pid", Integer.toString(userId));
 				allPosts =  pdao.getWall(userId);
 			}

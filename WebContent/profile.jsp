@@ -6,6 +6,7 @@
 	String name = (String) request.getAttribute("name");
 	String uid = (String) request.getAttribute("uid");
 	String pid = (String) request.getAttribute("pid");
+	String isFriend = (String) request.getAttribute("isFriend");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,17 +21,23 @@
 		<jsp:include page="navbar.jsp"/>
 		<div class="container-fluid">
 			<div class="container">
-			<h1>${profileUser.getName()} (${profileUser.getUsername()})</h1>
-			<h4>Email: ${profileUser.getEmailAddress()}</h4>
-			<h4>Age: ${profileUser.getAge()}</h4>
-			<h4>Gender: ${profileUser.getGender()}</h4>
+				<h1>${profileUser.getName()} (${profileUser.getUsername()})</h1>
+				<h4>Email: ${profileUser.getEmailAddress()}</h4>
+				<h4>Age: ${profileUser.getAge()}</h4>
+				<h4>Gender: ${profileUser.getGender()}</h4>
+				<% if (! uid.equals(pid) && (isFriend.equals("false")))  {%>
+					<form action="friendReqServlet" method="POST">
+						<button type="submit" id="add_friend" class="btn btn-primary">Add friend</button>
+						<input type="hidden" name="from" value="${sessionScope.user}">
+						<input type="hidden" name="to" value="${pid}">
+					</form>
+				<% } %> 
 			</div>
 			<br>
 
 			<% if (uid.equals(pid))  {%>
 				<jsp:include page="createPost.jsp"/><br>
-			<% } %>
-
+			<% } %> 
 			<% if (allPosts != null) {
 				for (WallPost p : allPosts) { %>
 				<div class="container">
