@@ -13,14 +13,44 @@ public class UserDAOImpl implements UserDAO{
 	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
 	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
 	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where email=?";
-	private String isFriendStmt = "SELECT 1 FROM UNSWBOOKFRIEND where (person_a=? and person_b=?) "
-			+ "or (person_a=? and person_b=?)";
+	private String isFriendStmt = "SELECT 1 FROM UNSWBOOKFRIENDS where (person_a=? and person_b=? and confirmed=true) "
+			+ "or (person_a=? and person_b=? and confirmed=true)";
 	private String isAdminStmt = "SELECT 1 from UNSWBOOKUSER where id=? and isadmin=true";
+	private String createFriendStmt  = "INSERT into UNSWBOOKFRIENDS (person_a, person_b) values (?,?)";
+	private String confirmFriendStmt = "UPDATE UNSWBOOKFRIENDS set confirmed=true where person_a=? and person_b=?";
+	
 	
 	
 	public UserDAOImpl() {
 		DatabaseConnection dbc = new DatabaseConnection(dbUrl);
 		conn = dbc.createConnection();
+	}
+	
+	public boolean createFriendReq(Integer from, Integer to){
+		try {
+			PreparedStatement stmt = conn.prepareStatement(createFriendStmt);
+			stmt.setInt(1, from);
+			stmt.setInt(2, to);
+			boolean success = stmt.execute();
+			return success;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	public boolean confirmFriendReq(Integer from, Integer to){
+		try {
+			PreparedStatement stmt = conn.prepareStatement(confirmFriendStmt);
+			stmt.setInt(1, from);
+			stmt.setInt(2, to);
+			return stmt.executeUpdate()==0 ? false : true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 	@Override
 	public boolean addUser(User user) {
