@@ -51,9 +51,9 @@ public class LikePostServlet extends HttpServlet {
 			UserDAO usd = new UserDAOImpl();
 			User u = usd.lookupId(userId); 
 			request.setAttribute("user", u);
-			Integer postId = (Integer) request.getAttribute("postId");
+			Integer postId = Integer.parseInt(request.getParameter("postId"));
 			
-			System.out.println("user: " + userId + " post: " + postId);
+			System.out.println("LIKE: user is: " + userId + " post: " + postId);
 			
 			if (userId != null && postId != null) {
 				Like like = new Like(postId, userId);
