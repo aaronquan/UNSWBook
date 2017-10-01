@@ -19,6 +19,9 @@
 		<div class="container-fluid">
 			<div class="container">
 			<h1>${profileUser.getName()} (${profileUser.getUsername()})</h1>
+			<h4>Email: ${profileUser.getEmailAddress()}</h4>
+			<h4>Age: ${profileUser.getAge()}</h4>
+			<h4>Gender: ${profileUser.getGender()}</h4>
 			</div>
 			<br><jsp:include page="createPost.jsp"/><br>
 			<% if (allPosts != null) {
