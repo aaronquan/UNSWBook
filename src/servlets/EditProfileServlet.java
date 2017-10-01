@@ -71,7 +71,7 @@ public class EditProfileServlet extends HttpServlet {
 		
 		if (password.equals(confirm_password)) {
 			UserDAO udao = new UserDAOImpl();
-			boolean successfulUpdate =  udao.updateUser(uid, name, email, gender, age, confirm_password);
+			boolean successfulUpdate =  udao.updateUser(userId, name, email, gender, age, confirm_password);
 			request.setAttribute("updateSuccess", successfulUpdate);
 			System.out.println(successfulUpdate);
 			request.getRequestDispatcher("Profile").forward(request, response);
@@ -79,10 +79,6 @@ public class EditProfileServlet extends HttpServlet {
 			request.setAttribute("updateSuccess", false);
 			request.getRequestDispatcher("registerServlet").forward(request, response);
 		}
-	}
-
-	private Predicate<? super String> isNull() {
-		return null;
 	}
 
 }

@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
-	public boolean updateUser(String uid, String name, String email, String gender, String age, String password) {
+	public boolean updateUser(Integer uid, String name, String email, String gender, String age, String password) {
 		try {
 			String set_addition = "SET ";
 			if (! name.equals("")) {
@@ -68,7 +68,7 @@ public class UserDAOImpl implements UserDAO{
 				set_addition = ", ";
 			}
 			if (! password.equals("")) {
-				password = set_addition + "PASSWORD = '" + password + "'";
+				password = set_addition + "PWD = '" + password + "'";
 				set_addition = ", ";
 			}
 			

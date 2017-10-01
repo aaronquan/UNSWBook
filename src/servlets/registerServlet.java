@@ -65,8 +65,7 @@ public class registerServlet extends HttpServlet {
 				request.getRequestDispatcher("registerServlet").forward(request, response);
 			}else{
 				Email(email, firstname, surname, username, userPassword);
-				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/Login");
-				dispatcher.forward(request, response);
+				response.sendRedirect("Login");
 			}
 	}
 
