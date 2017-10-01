@@ -70,9 +70,6 @@ public class registerServlet extends HttpServlet {
 			}
 	}
 
-	private Predicate<? super String> isNull() {
-		return null;
-	}
 	
 	public static void Email(String email, String firstName, String surname, String username, String password){
 			
