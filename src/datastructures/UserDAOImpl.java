@@ -10,10 +10,10 @@ public class UserDAOImpl implements UserDAO{
 	private Connection conn;
 	private String userCreateStmt = "INSERT into UNSWBOOKUSER (username, pwd, name, email) values (?, ?, ?, ?)";
 	private String validateStmt = "SELECT ID, BANNED FROM UNSWBOOKUSER WHERE username=? AND pwd=? AND isadmin=?";
-	private String lookupStmt = "SELECT username, pwd, name, email FROM UNSWBOOKUSER WHERE id=?";
+	private String lookupStmt = "SELECT username, pwd, name, email, gender, age FROM UNSWBOOKUSER WHERE id=?";
 	private String findStmt = "SELECT * FROM UNSWBOOKUSER WHERE username like '%?%'";
-	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where email=?";
-	private String isFriendStmt = "SELECT ID FROM UNSWBOOKFRIENDS where (person_a=? and person_b=? and confirmed=true) "
+	private String banStmt = "UPDATE UNSWBOOKUSER SET banned=true where id=?";
+	private String isFriendStmt = "SELECT 1 FROM UNSWBOOKFRIENDS where (person_a=? and person_b=? and confirmed=true) "
 			+ "or (person_a=? and person_b=? and confirmed=true)";
 	private String isAdminStmt = "SELECT 1 from UNSWBOOKUSER where id=? and isadmin=true";
 	private String createFriendStmt  = "INSERT into UNSWBOOKFRIENDS (person_a, person_b) values (?,?)";
@@ -229,7 +229,7 @@ public class UserDAOImpl implements UserDAO{
 			boolean success = stmt.execute();
 			if (!success) return null;
 			ResultSet results = stmt.getResultSet();
-			results.next();
+			if (!results.next()) return null;
 			if (results.getBoolean("BANNED")){
 				return -1;
 			}else{
@@ -252,7 +252,7 @@ public class UserDAOImpl implements UserDAO{
 			boolean success = stmt.execute();
 			if (!success) return null;
 			ResultSet results = stmt.getResultSet();
-			results.next();
+			if (!results.next()) return null;
 			if (results.getBoolean("BANNED")){
 				return -1;
 			}else{
@@ -275,6 +275,8 @@ public class UserDAOImpl implements UserDAO{
 			ResultSet results = stmt.getResultSet();
 			results.next();
 			User u = new User(results.getString("username"), results.getString("pwd"), results.getString("email"), results.getString("name"));
+			u.setAge(results.getInt("age"));
+			u.setGender(results.getString("gender"));
 			return u;
 			
 		} catch (SQLException e) {
@@ -284,10 +286,10 @@ public class UserDAOImpl implements UserDAO{
 		return null;
 	}
 	@Override
-	public boolean ban(String email) {
+	public boolean ban(Integer id) {
 		try {
 			PreparedStatement stmt = conn.prepareStatement(banStmt);
-			stmt.setString(1, email);
+			stmt.setInt(1, id);
 			System.out.println(stmt.toString());
 			return stmt.executeUpdate()==0 ? false : true;
 		} catch (SQLException e) {
@@ -306,7 +308,7 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setInt(4, user);
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
-			return(false);
+			return(stmt.getResultSet().next());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -316,9 +318,10 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public Boolean isAdmin(Integer userId) {
 		try {
-			PreparedStatement stmt = conn.prepareStatement(isFriendStmt);
+			PreparedStatement stmt = conn.prepareStatement(isAdminStmt);
 			stmt.setInt(1, userId);
-			return (stmt.execute());
+			stmt.execute();
+			return (stmt.getResultSet().next());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

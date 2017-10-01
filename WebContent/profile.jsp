@@ -7,6 +7,7 @@
 	String uid = (String) request.getAttribute("uid");
 	String pid = (String) request.getAttribute("pid");
 	String isFriend = (String) request.getAttribute("isFriend");
+	Boolean isAdmin = (Boolean) request.getAttribute("admin");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,7 +38,14 @@
 
 			<% if (uid.equals(pid))  {%>
 				<jsp:include page="createPost.jsp"/><br>
-			<% } %> 
+			<% } %>
+			
+			<% if (isAdmin) { %>
+			    <form name="confirmForm" method="post" action="BanUserServlet?banned=<%=pid %>">
+                <input type="submit" value="Ban" />
+                 </form>
+			<% } %>
+
 			<% if (allPosts != null) {
 				for (WallPost p : allPosts) { %>
 				<div class="container">

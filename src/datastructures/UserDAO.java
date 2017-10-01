@@ -18,7 +18,7 @@ public interface UserDAO {
 
 	User lookupId(Integer id);
 	
-	boolean ban(String email);
+	boolean ban(Integer id);
 	
 	boolean isFriend(Integer user, Integer user2);
 	
