@@ -1,6 +1,6 @@
-drop table UNSWBOOKPOST;
 drop table UNSWBOOKFRIENDS;
 drop table UNSWBOOKPOSTLIKES;
+drop table UNSWBOOKPOST;
 drop table UNSWBOOKUSER;
 
 create table UNSWBOOKUSER (
