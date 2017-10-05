@@ -46,7 +46,7 @@
                  </form>
 			<% } %>
 
-			<% if (allPosts != null) {
+			<% if (allPosts != null && (isFriend.equals("true") || isAdmin)) {
 				for (WallPost p : allPosts) { %>
 				<div class="container">
 					<div class="col-md-12">
@@ -77,7 +77,7 @@
 				                	   <form action="UnlikePostServlet" method="POST" id="<%=p.getId()%>_post">
 						                   <div class="post-footer-option container">
 						                        <ul class="list-unstyled">
-						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Unlike (<%=p.getLikedBy().size()%>)</a></li>
+						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Unlike (<%=p.getLikedBy()%>)</a></li>
 						                        </ul>
 						                   </div>
 						                   <input type="hidden" name="postId" value="<%=p.getId()%>">
@@ -87,7 +87,7 @@
 					                   <form action="LikePostServlet" method="POST" id="<%=p.getId()%>_post">
 						                   <div class="post-footer-option container">
 						                        <ul class="list-unstyled">
-						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy().size()%>)</a></li>
+						                            <li><a href="javascript:{}" onclick="document.getElementById('<%=p.getId()%>_post').submit();"><i class="glyphicon glyphicon-thumbs-up"></i>Like (<%=p.getLikedBy()%>)</a></li>
 						                        </ul>
 						                   </div>
 						                   <input type="hidden" name="postId" value="<%=p.getId()%>">

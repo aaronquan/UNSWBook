@@ -18,7 +18,7 @@ String to = request.getParameter("to");
 //dispatcher.forward(request, response);
 %>
 
-<form name="confirmForm" method="post" action="ConfirmFriendServlet?username=<%=from %>&to=<%=to%>">
+<form name="confirmForm" method="post" action="ConfirmFriendServlet?from=<%=from %>&to=<%=to%>">
      <input type="submit" value="Confirm Friend" />
 </form>
 </body>
