@@ -14,6 +14,8 @@ import datastructures.DatabaseConnection;
 import datastructures.Post;
 import datastructures.PostDAOImpl;
 import datastructures.User;
+import datastructures.UserActivity;
+import datastructures.UserActivityDAOImpl;
 import datastructures.UserDAO;
 import datastructures.UserDAOImpl;
 
@@ -57,6 +59,9 @@ public class PostServlet extends HttpServlet {
 			request.setAttribute("profileUser", u);
 			newPost = Post.createTextPost(content, userId, userId, new Timestamp(System.currentTimeMillis()));
 			System.out.println("posting to self!: " + content + " " + userId + " " + userId);
+			UserActivityDAOImpl uai = new UserActivityDAOImpl();
+			UserActivity ua = UserActivity.createActivity(userId, "Posted \"" + content + "\" on wall", new Timestamp(System.currentTimeMillis()));
+			uai.addUserActivity(ua);
 			
 			if (content != null && (! content.equals(""))) {
 				PostDAOImpl pdi = new PostDAOImpl();

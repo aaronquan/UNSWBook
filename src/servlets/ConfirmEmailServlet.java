@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import datastructures.User;
+import datastructures.UserActivity;
+import datastructures.UserActivityDAOImpl;
 import datastructures.UserDAOImpl;
 
 /**
@@ -49,6 +53,10 @@ public class ConfirmEmailServlet extends HttpServlet {
 				User newUser = new User(username,password, email, firstName.concat(" ").concat(surname));
 				UserDAOImpl udi = new UserDAOImpl();
 				boolean created = udi.addUser(newUser);
+				int userId = udi.validate(username, password);
+				UserActivityDAOImpl ua = new UserActivityDAOImpl();
+				UserActivity u = UserActivity.createActivity(userId, "Registered for UNSWBOOK at", new Timestamp(System.currentTimeMillis()));
+				ua.addUserActivity(u);
 				// If user not created display some sort of error message
 				response.sendRedirect("Login");
 //				dispatcher.forward(request, response);

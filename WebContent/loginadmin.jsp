@@ -10,7 +10,7 @@
 	
 	<body>
 		<div class="container" style="padding-top: 5%;'">
-			<jsp:include page="login_registration_form.jsp"/>
+			<jsp:include page="login_admin_form.jsp"/>
 		</div>
 	</body>
 </html>

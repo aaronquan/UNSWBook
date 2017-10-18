@@ -2,6 +2,7 @@ drop table UNSWBOOKFRIENDS;
 drop table UNSWBOOKPOSTLIKES;
 drop table UNSWBOOKPOST;
 drop table UNSWBOOKUSER;
+drop table UNSWBOOKUSERACTIVITY;
 			
 create table UNSWBOOKUSER (
   ID integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,
@@ -35,3 +36,12 @@ create table UNSWBOOKPOSTLIKES (
   POST integer references UNSWBOOKPOST(ID),
   LIKEDBY integer references UNSWBOOKUSER(ID)
 );
+
+create table UNSWBOOKUSERACTIVITY (
+	USERID integer references UNSWBOOKUSER(ID),
+	REPORT varchar(255),
+	REPORTED timestamp
+);
+
+
+SELECT report, reported from UNSWBOOKUSERACTIVITY where userid = 1 ORDER BY reported ASC;

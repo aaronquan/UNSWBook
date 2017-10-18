@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,6 +72,9 @@ public class Login extends HttpServlet {
 				login.setAttribute("user", id);
 				Integer expiry = 15 * 60; 
 				login.setMaxInactiveInterval(expiry);
+				UserActivityDAOImpl uai = new UserActivityDAOImpl();
+				UserActivity ua = UserActivity.createActivity(id, "Logged in", new Timestamp(System.currentTimeMillis()));
+				uai.addUserActivity(ua);
 				response.sendRedirect("Profile");
 			}
 		}
