@@ -34,19 +34,26 @@
 					</form>
 				<% } %> 
 			</div>
-			<br>
-
-			<% if (uid.equals(pid))  {%>
-				<jsp:include page="createPost.jsp"/><br>
-			<% } %>
 			
 			<% if (isAdmin) { %>
-			    <form name="confirmForm" method="post" action="BanUserServlet?banned=<%=pid %>">
-                <input type="submit" value="Ban" />
-                 </form>
-                 <form name="userActivity" method="post" action="UserActivityServlet?user=<%=pid%>">
-                 <input type="submit" value="View User Activity"/>
-                 </form>
+				<div class="container">
+			    	<% if (! uid.equals(pid)) { %>
+			    		<form name="confirmForm" method="post" action="BanUserServlet?banned=<%=pid %>">
+	                		<button type="submit" class="btn btn-warning">Ban</button>
+	                	</form>
+	                	<br>
+	                <% } %>
+	                <form name="userActivity" method="post" action="UserActivityServlet?user=<%=pid%>">
+	                	<button type="submit" class="btn btn-info">View user activity</button>
+	                	<input type="hidden" name="myId" value="${sessionScope.user}">
+	                </form>
+	            </div>
+			<% } %>
+			
+			<br>
+			
+			<% if (uid.equals(pid))  {%>
+				<jsp:include page="createPost.jsp"/><br>
 			<% } %>
 
 			<% if (allPosts != null && (isFriend.equals("true") || isAdmin)) {
