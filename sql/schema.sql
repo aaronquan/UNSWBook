@@ -1,8 +1,10 @@
 drop table UNSWBOOKFRIENDS;
 drop table UNSWBOOKPOSTLIKES;
 drop table UNSWBOOKPOST;
-drop table UNSWBOOKUSER;
 drop table UNSWBOOKUSERACTIVITY;
+drop table GRAPHTRIPLESTORE;
+drop table ENTITYSTORE;
+drop table UNSWBOOKUSER;
 			
 create table UNSWBOOKUSER (
   ID integer NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,
@@ -43,5 +45,18 @@ create table UNSWBOOKUSERACTIVITY (
 	REPORTED timestamp
 );
 
-
 SELECT report, reported from UNSWBOOKUSERACTIVITY where userid = 1 ORDER BY reported ASC;
+
+create table ENTITYSTORE (
+	SUBJECT varchar(255),
+	PREDICATE varchar(5) CHECK (PREDICATE IN ('Type', 'Class', 'Title')),
+	OBJECT varchar(255),
+	primary key (SUBJECT, PREDICATE, OBJECT)
+);
+
+create table GRAPHTRIPLESTORE (
+	SUBJECT varchar(255),
+	PREDICATE varchar(255),
+	OBJECT varchar(255),
+	primary key (SUBJECT, PREDICATE, OBJECT)
+);

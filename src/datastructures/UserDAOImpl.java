@@ -45,7 +45,14 @@ public class UserDAOImpl implements UserDAO{
 			PreparedStatement stmt = conn.prepareStatement(confirmFriendStmt);
 			stmt.setInt(1, from);
 			stmt.setInt(2, to);
-			return stmt.executeUpdate()==0 ? false : true;
+			boolean success = stmt.executeUpdate() == 0;
+			
+			stmt = conn.prepareStatement("INSERT into GRAPHTRIPLESTORE values ('U' || cast(? as CHAR(3)), 'E2', 'U' || cast(? as CHAR(3)))");
+			stmt.setInt(1, from);
+			stmt.setInt(2, to);
+			System.out.println(stmt.execute());
+			
+			return success;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -62,6 +69,14 @@ public class UserDAOImpl implements UserDAO{
 			stmt.setString(4, user.getEmailAddress());
 			System.out.println(stmt.toString());
 			boolean success = stmt.execute();
+			
+			stmt = conn.prepareStatement("INSERT into ENTITYSTORE values"
+					+ " ('U' || cast((SELECT MAX(ID) from UNSWBOOKUSER) as CHAR(3)), 'Type', 'User'),"
+					+ " ('U' || cast((SELECT MAX(ID) from UNSWBOOKUSER) as CHAR(3)), 'Class', 'entityNode'),"
+					+ " ('U' || cast((SELECT MAX(ID) from UNSWBOOKUSER) as CHAR(3)), 'Title', ?)");
+			stmt.setString(1, user.getUsername());
+			System.out.println(stmt.execute());
+			
 			return success;
 			
 		} catch (SQLException e) {

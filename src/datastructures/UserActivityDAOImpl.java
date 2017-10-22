@@ -47,7 +47,6 @@ public class UserActivityDAOImpl implements UserActivityDAO{
 			boolean success = stmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
 		}
 		
 	}

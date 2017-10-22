@@ -33,6 +33,21 @@ public class PostDAOImpl implements PostDAO {
 			stmt.setInt(2, post.getUserWallId());
 			stmt.setString(3, post.getPostText());
 			boolean success = stmt.execute();
+
+			// Add rows to ENTITYSTORE
+			stmt = conn.prepareStatement("INSERT into ENTITYSTORE values"
+					+ " ('P' || cast((SELECT MAX(ID) from UNSWBOOKPOST) as CHAR(3)), 'Type', 'Post'),"
+					+ " ('P' || cast((SELECT MAX(ID) from UNSWBOOKPOST) as CHAR(3)), 'Class', 'entityNode'),"
+					+ " ('P' || cast((SELECT MAX(ID) from UNSWBOOKPOST) as CHAR(3)), 'Title', ?)");
+			stmt.setString(1, post.getPostText());
+			System.out.println(stmt.execute());
+			
+			// Add row to GRAPHTRIPLESTORE
+			stmt = conn.prepareStatement("INSERT into GRAPHTRIPLESTORE values"
+					+ " ('U' || cast(? as CHAR(3)), 'E1', 'P' || cast((select MAX(ID) from UNSWBOOKPOST) as CHAR(3)))");
+			stmt.setInt(1, post.getUserId());
+			System.out.println(stmt.execute());
+			
 			return success;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,6 +118,22 @@ public class PostDAOImpl implements PostDAO {
 			stmt.setInt(1, like.getPostId());
 			stmt.setInt(2, like.getUserId());
 			success = stmt.execute();
+						
+			// delete row from GRAPHTRIPLESTORE
+			stmt = conn.prepareStatement("DELETE FROM GRAPHTRIPLESTORE WHERE "
+					+ "SUBJECT = 'U' || cast(? as CHAR(3)) "
+					+ "AND PREDICATE = 'E3' "
+					+ "AND OBJECT = 'P' || cast(? as CHAR(3))");
+			stmt.setInt(1, like.getUserId());
+			stmt.setInt(2, like.getPostId());
+			System.out.println(stmt.execute());
+			
+			// Add row to GRAPHTRIPLESTORE
+			stmt = conn.prepareStatement("INSERT into GRAPHTRIPLESTORE values ('U' || cast(? as CHAR(3)), 'E3', 'P' || cast(? as CHAR(3)))");
+			stmt.setInt(1, like.getUserId());
+			stmt.setInt(2, like.getPostId());
+			System.out.println(stmt.execute());
+			
 			return success;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -118,6 +149,16 @@ public class PostDAOImpl implements PostDAO {
 			stmt.setInt(1, like.getPostId());
 			stmt.setInt(2, like.getUserId());
 			boolean success = stmt.execute();
+			
+			// delete row from GRAPHTRIPLESTORE
+			stmt = conn.prepareStatement("DELETE FROM GRAPHTRIPLESTORE WHERE "
+					+ "SUBJECT = 'U' || cast(? as CHAR(3)) "
+					+ "AND PREDICATE = 'E3' "
+					+ "AND OBJECT = 'P' || cast(? as CHAR(3))");
+			stmt.setInt(1, like.getUserId());
+			stmt.setInt(2, like.getPostId());
+			System.out.println(stmt.execute());
+			
 			return success;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
