@@ -13,6 +13,7 @@
       </form>
 	  
       <ul class="nav navbar-nav navbar-right">
+      	<a class="btn navbar-nav" style="padding-top: 14px;" href="GraphServlet">View Graph</a>
       	<a class="btn navbar-nav" style="padding-top: 14px;" href="Profile">${user.getName()}</a>
         <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-globe"></span></a>
           <div class="dropdown-menu" role="menu">

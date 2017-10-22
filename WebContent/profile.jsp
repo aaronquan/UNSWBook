@@ -32,6 +32,7 @@
 						<input type="hidden" name="from" value="${sessionScope.user}">
 						<input type="hidden" name="to" value="${pid}">
 					</form>
+					<br>
 				<% } %> 
 			</div>
 			
