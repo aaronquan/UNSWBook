@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,14 +14,9 @@ import javax.servlet.http.HttpSession;
 import datastructures.DatabaseConnection;
 import datastructures.Graph;
 import datastructures.GraphDAOImpl;
-import datastructures.PostDAO;
-import datastructures.PostDAOImpl;
 import datastructures.User;
-import datastructures.UserActivity;
-import datastructures.UserActivityDAOImpl;
 import datastructures.UserDAO;
 import datastructures.UserDAOImpl;
-import datastructures.WallPost;
 
 /**
  * Servlet implementation class GraphServlet
@@ -59,9 +55,27 @@ public class GraphServlet extends HttpServlet {
 			request.setAttribute("name", (String) u.getName());
 			GraphDAOImpl gi = new GraphDAOImpl();
 			List<Graph> nodes = gi.getNodeList();
+			List<Graph> newNodes = new ArrayList<Graph>();
 			List<Graph> edges = gi.getConnectionList();
-			request.setAttribute("nodes", nodes);
-			request.setAttribute("edges", edges);
+			
+			String graphSearch = (String) request.getParameter("graphSearch");
+			if (graphSearch == null || graphSearch.equals("")) {
+				request.setAttribute("nodes", nodes);
+				request.setAttribute("edges", edges);
+				System.out.println("HELLLLLLLLLL");
+			} else {
+				System.out.println("asiodjfoaisjdfoaisdj");
+				for (Graph n: nodes) {
+					if (n.getTitle().matches(".*" + graphSearch + ".*")) {
+						newNodes.add(n);
+					}
+				}
+				request.setAttribute("nodes", newNodes);
+				request.setAttribute("edges", edges);
+			}
+			
+			
+
 			request.getRequestDispatcher("graph.jsp").forward(request, response);
 		}else{
 			response.sendRedirect("Login");

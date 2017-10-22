@@ -50,7 +50,7 @@ public class Graph {
 	public static Graph createNode(String id, String title) {
 		Graph node = new Graph();
 		node.id = id;
-		if (id.matches("P[0-9]+")) {
+		if (id.matches(".*P.*")) {
 			node.shape = "box";
 		} else {
 			node.shape = "ellipse";
@@ -62,11 +62,11 @@ public class Graph {
 	public static Graph createEdge(String id, String from, String to) {
 		Graph edge = new Graph();
 		edge.id = id;
-		if (id.equals("E1")) {
+		if (id.matches(".*E1.*")) {
 			edge.title = "FriendsWith";
-		} else if (id.equals("E2")) {
+		} else if (id.matches(".*E2.*")) {
 			edge.title = "Posted";
-		} else if (id.equals("E2")) {
+		} else if (id.matches(".*E3.*")) {
 			edge.title = "Liked";
 		} else {
 			edge.title = "";
