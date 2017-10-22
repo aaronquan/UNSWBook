@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import datastructures.DatabaseConnection;
+import datastructures.Graph;
+import datastructures.GraphDAOImpl;
 import datastructures.PostDAO;
 import datastructures.PostDAOImpl;
 import datastructures.User;
@@ -55,6 +57,11 @@ public class GraphServlet extends HttpServlet {
 			request.setAttribute("user", u);
 			request.setAttribute("uid", (String) Integer.toString(userId));
 			request.setAttribute("name", (String) u.getName());
+			GraphDAOImpl gi = new GraphDAOImpl();
+			List<Graph> nodes = gi.getNodeList();
+			List<Graph> edges = gi.getConnectionList();
+			request.setAttribute("nodes", nodes);
+			request.setAttribute("edges", edges);
 			request.getRequestDispatcher("graph.jsp").forward(request, response);
 		}else{
 			response.sendRedirect("Login");

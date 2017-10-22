@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="datastructures.*, java.util.*"%>
-   
+<%@ page import="datastructures.*, java.util.*, com.google.gson.Gson"%>
+<% 
+	List<Graph> nodes = (List<Graph>)request.getAttribute("nodes");
+	List<Graph> edges = (List<Graph>)request.getAttribute("edges");
+	String jNodes = new Gson().toJson(nodes);
+	String jEdges = new Gson().toJson(edges);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -23,25 +28,28 @@
 	</body>
 	
 	<script type="text/javascript">
+		console.log("gelloooooo");
+		
 		// create an array with nodes
-		var nodes = new vis.DataSet([
-			{id: "A", label: 'jsamir'},
-			{id: 2, label: 'Who likes hamish and andy'},
-			{id: 3, label: 'Hi Im Jerome, Im new!'},
+		var graphNodes = new vis.DataSet([
+			{id: 1, label: 'jsamir'},
+			{id: 2, label: 'Who likes hamish and andy', shape: 'box'},
+			{id: 3, label: 'Hi Im Jerome, Im new!', shape: 'box'},
 			{id: 4, label: 'timc'},
 		]);
 		
 		// create an array with edges
 		var edges = [
-		    {from: "A", to: 2, label: 'Liked', font: {align: 'middle'}, arrows:'to'},
-		    {from: "A", to: 3, label: 'Posted', font: {align: 'middle'}, arrows:'to'},
+		    {from: 1, to: 2, label: 'Liked', font: {align: 'middle'}, arrows:'to'},
+		    {from: 1, to: 3, label: 'Posted', font: {align: 'middle'}, arrows:'to'},
 		    {from: 4, to: 2, label: 'Posted', font: {align: 'middle'}, arrows:'to'},
-		    {from: "A", to: 4, label: 'FriendsWith', font: {align: 'middle'}, arrows:'to, from'},
+		    {from: 1, to: 4, label: 'FriendsWith', font: {align: 'middle'}},
 		]
+		
 		// create a network
 		var container = document.getElementById('mynetwork');
 		var data = {
-			nodes: nodes,
+			nodes: graphNodes,
 			edges: edges
 		};
 		var options = {};
